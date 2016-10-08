@@ -1,0 +1,33 @@
+<html>
+	<head>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				-webkit-touch-callout: none; /* iOS Safari */
+				-webkit-user-select: none;   /* Chrome/Safari/Opera */
+				-khtml-user-select: none;    /* Konqueror */
+				-moz-user-select: none;      /* Firefox */
+				-ms-user-select: none;       /* Internet Explorer/Edge */
+				user-select: none; 
+			}
+			#hud {
+				position: absolute;
+				color: white;
+			}
+		</style>
+		<script src="./three.min.js"></script>
+		<script src="./OBJLoader.js"></script>
+		<script src="./jquery-3.1.1.min.js"></script>
+		<script src="./bundle.js"></script>
+	</head>
+	<body>
+		<div id="hud">
+			<div id="altitude" class="hudText">0</div>
+			<div id="velocity" class="hudText">0</div>
+			<div id="acceleration" class="hudText">0</div>
+			<div id="actualRotation" class="hudText">0</div>
+			<div id="componentRotation" class="hudText">0</div>
+		</div>
+	</body>
+</html>
