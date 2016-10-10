@@ -9,11 +9,18 @@
 				-khtml-user-select: none;    /* Konqueror */
 				-moz-user-select: none;      /* Firefox */
 				-ms-user-select: none;       /* Internet Explorer/Edge */
-				user-select: none; 
+				user-select: none;
+				overflow: hidden;
 			}
 			#hud {
 				position: absolute;
 				color: white;
+			}
+			.nameTag {
+				position: absolute;
+				color:white;
+				background-color:blue;
+				pointer-events:none;
 			}
 		</style>
 		<script src="./three.min.js"></script>
