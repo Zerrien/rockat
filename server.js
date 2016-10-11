@@ -50,7 +50,7 @@ wss.on('connection', function connection(ws) {
 						}
 					}));
 				} catch(e) {
-					// Safety!
+					ws.close();
 				}
 			}
 		}
@@ -60,14 +60,14 @@ wss.on('connection', function connection(ws) {
 			var con = connections[i];
 			if(con.uuid !== ws.uuid) {
 				try {
-					ws.send(JSON.stringify({
+					con.send(JSON.stringify({
 						messageType: "dead_unit",
 						data: {
 							uuid: ws.uuid
 						}
 					}));
 				} catch(e) {
-					// meh
+					con.close();
 				}
 			}
 		}

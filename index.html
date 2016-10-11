@@ -12,6 +12,9 @@
 				user-select: none;
 				overflow: hidden;
 			}
+			body {
+				background-color:rgba(100, 0, 0, 1);
+			}
 			#hud {
 				position: absolute;
 				color: white;
@@ -22,6 +25,39 @@
 				background-color:blue;
 				pointer-events:none;
 			}
+			#renderContainer {
+				border-radius: 32px;
+				position:absolute;
+				width: calc(100% - 256px);
+				height: 80%;
+				left: 128px;
+				top: 10%;
+			}
+			#header {
+				text-align:center;
+			}
+			#header > img {
+				height: 10%;
+			}
+			#leftBanner {
+				position:absolute;
+				color:white;
+			}
+			#rightBanner {
+				position:absolute;
+				left: calc(100% - 128px);
+				color:white;
+			}
+			#altitude {
+				position:absolute;
+				top:0;
+				left:0;
+				text-align:center;
+				width:100%;
+				color:white;
+				font-family:monospace;
+				font-size:xx-large;
+			}
 		</style>
 		<script src="./three.min.js"></script>
 		<script src="./OBJLoader.js"></script>
@@ -29,12 +65,17 @@
 		<script src="./bundle.js"></script>
 	</head>
 	<body>
-		<div id="hud">
-			<div id="altitude" class="hudText">0</div>
-			<div id="velocity" class="hudText">0</div>
-			<div id="acceleration" class="hudText">0</div>
-			<div id="actualRotation" class="hudText">0</div>
-			<div id="componentRotation" class="hudText">0</div>
+		<div id="header">
+			<img src="roskatmos.png">
+		</div>
+		<div id="leftBanner">
+			Left
+		</div>
+		<div id="rightBanner">
+			Right
+		</div>
+		<div id="renderContainer">
+			<div id="altitude">Altitude<br>0</div>
 		</div>
 	</body>
 </html>

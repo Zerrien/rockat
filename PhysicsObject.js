@@ -18,36 +18,48 @@ module.exports = class PhysicsObject {
 		this.pitch = 0;
 		this.yaw = 0;
 		this.roll = 0;
+		this.dist = 0;
 	}
 	logic(dTime, tTime, entities) {
-		this.mesh.rotation.x = this.pitch;
+		this.mesh.rotation.y = this.pitch;
 		this.mesh.rotation.z = this.yaw;
-		this.mesh.rotation.y = this.roll;
+		this.mesh.rotation.x = this.roll;
 		//console.log(this.pitch, this.yaw, this.roll);
 		var tSize = 1 / 64;
+		var pDir = new THREE.Vector3(1, 0, 0);
+		pDir.applyMatrix4(navBallQ);
+		var celestial = this.findNearestCelestial(entities);
+		var dir = celestial.pos.sub(this.pos);
+		var gForce2 = 0.01 * (celestial.mass * this.mass) / (celestial.pos.distanceToSquared(this.pos));
 		while(dTime > 0) {
 			dTime -= tSize;
 			if(isThrusting) {
 				this.isGrounded = false;
 			}
 			if(!this.isGrounded) {
-				var celestial = this.findNearestCelestial(entities);
-				var dir = celestial.pos.sub(this.pos).normalize();
+				
+				dir = celestial.pos.sub(this.pos).normalize();
 				var tStep = tSize / 100;
 
 				this.mesh.position.x += tStep * (this.vel.x + tStep * this.acc.x / 2);
 				this.mesh.position.y += tStep * (this.vel.y + tStep * this.acc.y / 2);
 				this.mesh.position.z += tStep * (this.vel.z + tStep * this.acc.z / 2);
 
+				celestial = this.findNearestCelestial(entities);
 
-				var gForce2 = 0.01 * (celestial.mass * this.mass) / (celestial.pos.distanceToSquared(this.pos));
+				gForce2 = 0.01 * (celestial.mass * this.mass) / (celestial.pos.distanceToSquared(this.pos));
+				this.dist = Math.sqrt(celestial.pos.distanceToSquared(this.pos)) - celestial.size;
 				var tAccX2, tAccY2, tAccZ2;
 				//var pitch = this.pitch;
 				//var yaw = this.yaw;
 				//var pDir = new THREE.Vector3(Math.cos(yaw) * Math.cos(pitch), Math.sin(pitch), Math.sin(yaw) * Math.cos(pitch));
 				//console.log(this.pitch, this.yaw, this.roll);
-				var pDir = new THREE.Vector3(Math.cos(this.pitch) * Math.cos(this.yaw), Math.sin(this.yaw), Math.sin(this.pitch) * Math.cos(this.yaw));
+				//var pDir = new THREE.Vector3(Math.cos(this.pitch) * Math.cos(this.yaw), Math.sin(this.yaw), Math.sin(this.pitch) * Math.cos(this.yaw));
+				
 				//console.log(pDir);
+				//console.log(pDir);
+				pDir = new THREE.Vector3(1, 0, 0);
+				pDir.applyMatrix4(navBallQ);
 				var thrustModifier = 1.5;
 				if(isThrusting) {
 					tAccX2 = dir.x * gForce2 + pDir.x * thrustModifier;
@@ -88,6 +100,31 @@ module.exports = class PhysicsObject {
 				this.mesh.position.z = this.target.pos.z + this.anchorLoc.z * this.target.size;
 			}
 		}
+
+		facingDir.vertices[0].set(this.pos.x, this.pos.y, this.pos.z);
+		facingDir.vertices[1].set(this.pos.x + pDir.x * 5, this.pos.y + pDir.y * 5, this.pos.z + pDir.z * 5);
+		facingDir.verticesNeedUpdate = true;
+
+		prograde.vertices[0].set(this.pos.x, this.pos.y, this.pos.z);
+		prograde.vertices[1].set(this.pos.x + this.vel.x * 5, this.pos.y + this.vel.y * 5, this.pos.z + this.vel.z * 5);
+		prograde.verticesNeedUpdate = true;
+
+		retrograde.vertices[0].set(this.pos.x, this.pos.y, this.pos.z);
+		retrograde.vertices[1].set(this.pos.x - this.vel.x * 5, this.pos.y - this.vel.y * 5, this.pos.z - this.vel.z * 5);
+		retrograde.verticesNeedUpdate = true;
+
+		if(!this.isGrounded) {
+			gravityDir.vertices[0].set(this.pos.x, this.pos.y, this.pos.z);
+			gravityDir.vertices[1].set(this.pos.x + dir.x * gForce2 * 2.5, this.pos.y + dir.y * gForce2 * 2.5, this.pos.z + dir.z * gForce2 * 2.5);
+			gravityDir.verticesNeedUpdate = true;
+		} else {
+			gravityDir.vertices[0].set(this.pos.x, this.pos.y, this.pos.z);
+			gravityDir.vertices[1].set(this.pos.x, this.pos.y, this.pos.z);
+			gravityDir.verticesNeedUpdate = true;
+		}
+
+
+		$("#altitude").html("Altitude<br>"+this.dist.toFixed(2) + "<br>" + this.vel.length().toFixed(2) + "u/s");
 	}
 	get acc() {
 		return this.acceleration;

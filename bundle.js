@@ -56,20 +56,25 @@
 	};
 
 	var systemRenderer = new THREE.WebGLRenderer();
-	systemRenderer.setSize(window.innerWidth, window.innerHeight);
+	systemRenderer.setSize((window.innerWidth -256), (window.innerHeight * 0.8));
 	var systemScene = new THREE.Scene();
-	window.systemCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000000);
+	window.systemCamera = new THREE.PerspectiveCamera(60, (window.innerWidth -256) / (window.innerHeight * 0.8), 1, 10000000);
 	var hudRenderer = new THREE.WebGLRenderer({alpha:true});
-	hudRenderer.setSize(window.innerWidth, window.innerHeight);
+	hudRenderer.setSize((window.innerWidth -256), (window.innerHeight * 0.8));
 	var hudScene = new THREE.Scene();
-	var hudCamera = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, -window.innerHeight / 2, window.innerHeight / 2, 1, 10000);
+	var hudCamera = new THREE.OrthographicCamera(-(window.innerWidth -256) / 2, (window.innerWidth -256) / 2, -(window.innerHeight * 0.8) / 2, (window.innerHeight * 0.8) / 2, 1, 10000);
 	hudCamera.position.z = -1000;
 	hudCamera.up = new THREE.Vector3(0, 1, 0);
 	hudCamera.lookAt(new THREE.Vector3(0, 0, 0));
 
+	var faceRenderer = new THREE.WebGLRenderer();
+	faceRenderer.setSize(128, 128);
+	var faceCamera = new THREE.PerspectiveCamera(30, 1, 1, 10000000);
+
 	var terra, luna, sol, fe;
 	var piggen;
 	var navBall;
+	var skyBox;
 
 	var manager = new THREE.LoadingManager();
 	var textureLoader = new THREE.ImageLoader(manager);
@@ -141,19 +146,33 @@
 
 	function setupScenes() {
 		//var ambient = new THREE.AmbientLight( 0x222222 );
-		var ambient = new THREE.AmbientLight( 0xFFFFFF );
+		var ambient = new THREE.AmbientLight( 0x222222 );
 		systemScene.add( ambient );
 		var point = new THREE.PointLight(0xFFFFFF)
 		point.position.set( 0, 1, 0 );
 
 		systemScene.add( point );
-		document.body.appendChild(systemRenderer.domElement);
+		$("#renderContainer").append(systemRenderer.domElement);
 
 		var hudElem = hudRenderer.domElement;
 		hudElem.style.position = "absolute";
 		hudElem.style.left = 0;
 		hudElem.style.top = 0;
-		document.body.appendChild(hudElem);
+		$("#renderContainer").append(hudElem);
+
+		var faceElem = faceRenderer.domElement;
+		faceElem.style.position = "absolute";
+		faceElem.style.left = "calc(100% - 128px - 32px)";
+		faceElem.style.top = "calc(100% - 128px - 32px)";
+		faceElem.style.borderRadius = "32px";
+		faceElem.style.border = "2px solid rgba(100, 0, 0, 1)";
+		$("#renderContainer").append(faceElem);
+
+		systemScene.add(proLine);
+		systemScene.add(retroLine);
+		systemScene.add(gravityLine);
+		systemScene.add(facingLine);
+
 
 
 	}
@@ -161,7 +180,7 @@
 	var geo;
 	var mat;
 	function setupSystem() {
-		sol = new CelestialBody(128 * 10, assets.textures.sol, null, 0, 0, 128000 * 100);
+		sol = new CelestialBody(128 * 10, assets.textures.sol, null, 0, 0, 128000 * 100 * 1000);
 		sol.material.emissiveMap = assets.textures.sol;
 		sol.material.emissive.r = 1;
 		sol.material.emissive.g = 1;
@@ -169,7 +188,7 @@
 		systemScene.add(sol.mesh);
 		entityArray.push(sol);
 
-		fe = new CelestialBody(16, assets.textures.fe, sol, sol.size * 4, 0.125 / 8 / 8 / 8 / 8, 10000);
+		fe = new CelestialBody(16, assets.textures.fe, sol, sol.size * 4, 0.125 / 8 / 8 / 8 / 8, 128000 / 2);
 		systemScene.add(fe.mesh);
 		entityArray.push(fe);
 		
@@ -177,7 +196,7 @@
 		systemScene.add(terra.mesh);
 		entityArray.push(terra);
 		
-		luna = new CelestialBody(4, assets.textures.luna, terra, terra.size * 8, 0.125 / 32 / 8 / 8 / 8, 500);
+		luna = new CelestialBody(4, assets.textures.luna, terra, terra.size * 8, 0.125 / 32 / 8 / 8 / 8, 128000 / 16);
 		systemScene.add(luna.mesh);
 		entityArray.push(luna);
 
@@ -191,10 +210,22 @@
 
 		// line
 		line = new THREE.Line( geometry,  material );
-		systemScene.add( line );
+		//systemScene.add( line );
 
 		for(var i = 0; i < 1; i++) {
-			piggen = new PhysicsObject(assets.models.piggen.clone(), terra, 1);
+			piggen = new PhysicsObject(assets.models.katsuit.clone(), terra, 1);
+			piggen.mesh.add(faceCamera);
+			/*
+			//faceCamera.up = new THREE.Vector3(0, 1, 0);
+		//faceCamera.position.set(piggen.pos.x + 4 * pDir.x, piggen.pos.y + 2.5 * pDir.z, piggen.pos.z);
+		//faceCamera.lookAt(piggen.pos.add(new THREE.Vector3(0, 2.5, 0)));
+			*/
+			var katface = assets.models.kat.clone();
+			piggen.mesh.add(katface)
+			var katpack = assets.models.katpack.clone();
+			piggen.mesh.add(katpack)
+			var kathelm = assets.models.kathelmet.clone();
+			piggen.mesh.add(kathelm);
 			systemScene.add(piggen.mesh);
 			entityArray.push(piggen);
 			//piggen.mesh.position.y = terra.size * 4;
@@ -203,24 +234,43 @@
 			//piggen.mesh.position.z = terra.pos.z - 40 + Math.random() * 80;
 			//piggen.velocity.x = 4;
 			//piggen.isGrounded = false;
-			piggen.mesh.scale.set(10, 10, 10);
+			piggen.mesh.scale.set(0.5,0.5,0.5);
+			faceCamera.up = new THREE.Vector3(0, 1, 0);
+			faceCamera.position.set(8, 5, 0);
+			faceCamera.lookAt(new THREE.Vector3(0, 5, 0));
 		}
 
 
 		var geo = new THREE.SphereGeometry(100, 32, 32);
 		var mat = new THREE.MeshLambertMaterial({map:assets.textures.navball});
 		navBall = new THREE.Mesh(geo, mat);
-		navBall.position.y = window.innerHeight / 2 - 100;
-		hudScene.add(navBall);
+		navBall.position.y = (window.innerHeight * 0.8) / 2 - 100;
+		//hudScene.add(navBall);
 		hudScene.add(new THREE.AmbientLight(0xFFFFFF));
 		navBall.target = piggen;
 
 		geo = new THREE.SphereGeometry(5, 8, 8);
 		mat = new THREE.MeshLambertMaterial({color: 0xFF0000});
 		cursorDot = new THREE.Mesh(geo, mat);
-		cursorDot.position.y = window.innerHeight / 2 - 100;
+		cursorDot.position.y = (window.innerHeight * 0.8) / 2 - 100;
 		cursorDot.position.z = -100;
-		hudScene.add(cursorDot);
+		//hudScene.add(cursorDot);
+
+		var materialArray = [];
+		var order = ["left", "right", "up", "down", "front", "back"];
+		for(var i = 0; i < 6; i++) {
+			materialArray.push(new THREE.MeshBasicMaterial({
+				map: assets.textures["sky_" + order[i]],
+				side: THREE.BackSide
+			}))
+		}
+		var skyGeo = new THREE.CubeGeometry(10000000, 10000000, 10000000);
+		var skyMat = new THREE.MeshFaceMaterial(materialArray);
+		skyBox = new THREE.Mesh(skyGeo, skyMat);
+		skyBox.position.x = piggen.mesh.position.x;
+		skyBox.position.y = piggen.mesh.position.y;
+		skyBox.position.z = piggen.mesh.position.z;
+		systemScene.add(skyBox);
 
 	}
 
@@ -230,16 +280,16 @@
 		}
 		window.onmousedown = function(e) {
 			mouse.isDown = mouse.isHeld = true;
-			mouse.clickPos.x = e.offsetX;
-			mouse.clickPos.y = e.offsetY;
+			mouse.clickPos.x = e.clientX;
+			mouse.clickPos.y = e.clientY;
 		}
 		window.onmouseup = function(e) {
 			mouse.clickPos.x = mouse.clickPos.y = null;
 			mouse.isDown = mouse.isHeld = false;
 		}
 		window.onmousemove = function(e) {
-			mouse.curPos.x = e.offsetX;
-			mouse.curPos.y = e.offsetY;
+			mouse.curPos.x = e.clientX;
+			mouse.curPos.y = e.clientY;
 		}
 		window.onkeydown = function(e) {
 			keyArray[e.keyCode] = true;
@@ -310,10 +360,6 @@
 							key = message.data.key;
 							break;
 						case "world_update":
-						/*
-						piggen = new PhysicsObject(assets.models.piggen.clone(), terra, 1);
-						*/
-
 							if(ghosts[message.data.uuid]) {
 								ghosts[message.data.uuid].piggen = message.data.piggen;
 								ghosts[message.data.uuid].obj.update(message.data.piggen);
@@ -321,10 +367,16 @@
 								console.log("New ghost detected.");
 								ghosts[message.data.uuid] = {
 									piggen: message.data.piggen,
-									obj: new GhostObject(assets.models.piggen.clone(), message.data.piggen)
+									obj: new GhostObject(assets.models.katsuit.clone(), message.data.piggen)
 								}
-
-								ghosts[message.data.uuid].obj.mesh.scale.set(10, 10, 10);
+								var t = ghosts[message.data.uuid].obj.mesh;
+								var katface = assets.models.kat.clone();
+								t.add(katface)
+								var katpack = assets.models.katpack.clone();
+								t.add(katpack)
+								var kathelm = assets.models.kathelmet.clone();
+								t.add(kathelm);
+								ghosts[message.data.uuid].obj.mesh.scale.set(0.5, 0.5, 0.5);
 
 								ghosts[message.data.uuid].obj.uuid = message.data.uuid
 								var nameTag = $("<div>");
@@ -335,8 +387,8 @@
 								$("body").append(nameTag);
 								var pos = new THREE.Vector3(piggen.pos.x, piggen.pos.y, piggen.pos.z);
 								pos.project(systemCamera);
-								nameTag.css('left', Math.round((pos.x + 1) * window.innerWidth / 2))
-								nameTag.css('top', Math.round((-1 * pos.y + 1) * window.innerHeight / 2))
+								nameTag.css('left', Math.round((pos.x + 1) * (window.innerWidth -256) / 2))
+								nameTag.css('top', Math.round((-1 * pos.y + 1) * (window.innerHeight * 0.8) / 2))
 								nameTag.attr("id", message.data.uuid);
 								console.log(message.data.uuid);
 
@@ -344,6 +396,12 @@
 								entityArray.push(ghosts[message.data.uuid].obj);
 							}
 							//console.log(message.data);
+							break;
+						case "dead_unit":
+							if(ghosts[message.data.uuid]) {
+								systemScene.remove(ghosts[message.data.uuid].obj.mesh);
+								$("#"+message.data.uuid).remove();
+							}
 							break;
 						default:
 							console.log("Unknown messageType: ", message.messageType);
@@ -391,8 +449,8 @@
 			cameraObj.oRoll = cameraObj.roll;
 		}
 		if(mouse.isDown) {
-			cameraObj.yaw = cameraObj.oYaw + (mouse.curPos.x - mouse.clickPos.x) / window.innerWidth * Math.PI * 2;
-			cameraObj.pitch = Math.min(Math.max(cameraObj.oPitch + (mouse.curPos.y - mouse.clickPos.y) / window.innerHeight * Math.PI * 2, -Math.PI + 0.0000001), -0.0000001);
+			cameraObj.yaw = cameraObj.oYaw + (mouse.curPos.x - mouse.clickPos.x) / (window.innerWidth -256) * Math.PI * 2;
+			cameraObj.pitch = Math.min(Math.max(cameraObj.oPitch + (mouse.curPos.y - mouse.clickPos.y) / (window.innerHeight * 0.8) * Math.PI * 2, -Math.PI + 0.0000001), -0.0000001);
 		}
 		if(mouse.deltaY !== 0) {
 			cameraObj.distance += mouse.deltaY / 100;
@@ -417,50 +475,111 @@
 		if(keyArray[87]) {
 			//W
 			var m1 = new THREE.Matrix4();
-			m1.makeRotationX(delta);
-			navBallQ.premultiply(m1);
+			m1.makeRotationZ(-1 * delta);
+			navBallQ.multiply(m1);
 			
 		} else if (keyArray[83]) {
 			//S
 			var m1 = new THREE.Matrix4();
-			m1.makeRotationX(-1 * delta);
-			navBallQ.premultiply(m1);
+			m1.makeRotationZ(delta);
+			navBallQ.multiply(m1);
 		}
 		if(keyArray[65]) {
 			//A
 			var m1 = new THREE.Matrix4();
-			m1.makeRotationY(-1 * delta);
-			navBallQ.premultiply(m1);
+			m1.makeRotationY(delta);
+			navBallQ.multiply(m1);
 		} else if(keyArray[68]) {
 			//D
 			var m1 = new THREE.Matrix4();
-			m1.makeRotationY(delta);
-			navBallQ.premultiply(m1);
+			m1.makeRotationY(-1 * delta);
+			navBallQ.multiply(m1);
 		}
 		if(keyArray[81]) {
 			//Q
 			var m1 = new THREE.Matrix4();
-			m1.makeRotationZ(-1 * delta);
-			navBallQ.premultiply(m1);
+			m1.makeRotationX(-1 * delta);
+			navBallQ.multiply(m1);
 		} else if(keyArray[69]) {
 			//E
 			var m1 = new THREE.Matrix4();
-			m1.makeRotationZ(delta);
-			navBallQ.premultiply(m1);
+			m1.makeRotationX(delta);
+			navBallQ.multiply(m1);
 		}
 		var e = new THREE.Euler();
 		e.setFromRotationMatrix(navBallQ);
-		piggen.yaw = e.x;
-		piggen.roll = e.z;
+		piggen.yaw = e.z;
+		piggen.roll = e.x;
 		piggen.pitch = e.y;
+		var v1 = new THREE.Vector3(1, 0, 0);
+		v1.applyMatrix4(navBallQ);
+		//console.log(v1);
+
+		
+
+		navBall.rotation.x = e.z; // Yeah, ok
+		navBall.rotation.y = e.y;
+		navBall.rotation.z = e.x; // Yep, makes sense.
 	}
+
+
+	var proMat = new THREE.LineBasicMaterial({color:0x00FF00})
+	window.prograde = new THREE.Geometry();
+	prograde.vertices.push(
+		new THREE.Vector3(0, 0, 0),
+		new THREE.Vector3(0, 0, 0)
+	)
+	var proLine = new THREE.Line(prograde, proMat);
+	proLine.frustumCulled = false;
+	var retroMat = new THREE.LineBasicMaterial({color:0xFF0000})
+	window.retrograde = new THREE.Geometry();
+	retrograde.vertices.push(
+		new THREE.Vector3(0, 0, 0),
+		new THREE.Vector3(0, 0, 0)
+	)
+	var retroLine = new THREE.Line(retrograde, retroMat);
+	retroLine.frustumCulled = false;
+	var gravityMat = new THREE.LineBasicMaterial({color:0x0000FF})
+	window.gravityDir = new THREE.Geometry();
+	gravityDir.vertices.push(
+		new THREE.Vector3(0, 0, 0),
+		new THREE.Vector3(0, 0, 0)
+	)
+	var gravityLine = new THREE.Line(gravityDir, gravityMat);
+	gravityLine.frustumCulled = false;
+	var facingMat = new THREE.LineBasicMaterial({color:0xFFFFFF})
+	window.facingDir = new THREE.Geometry();
+	facingDir.vertices.push(
+		new THREE.Vector3(0, 0, 0),
+		new THREE.Vector3(0, 0, 0)
+	)
+	var facingLine = new THREE.Line(facingDir, facingMat);
+	facingLine.frustumCulled = false;
+
+
+
+
+
+
+	/*
+	var mat2 = new THREE.LineBasicMaterial({color:0xFFFF00})
+	window.geo2 = new THREE.Geometry();
+	geo2.vertices.push(
+		new THREE.Vector3(-10000000, 0, 0),
+		new THREE.Vector3(10000000, 0, 0)
+	)
+	var testLine = new THREE.Line(geo2);
+	testLine.frustumCulled = false;
+	*/
+
 	window.isThrusting = false;
-	var navBallQ = new THREE.Matrix4();
+	window.navBallQ = new THREE.Matrix4();
 
 	function logic() {
 		//navBall.rotation.x = navBall.target.pitch + Math.PI / 2;
 		//navBall.rotation.z = navBall.target.yaw;
-		navBall.rotation.setFromRotationMatrix(navBallQ, 'XYZ')
+		//navBall.rotation.setFromRotationMatrix(navBallQ, 'YXZw')
+
 		for(var i = 0; i < entityArray.length; i++) {
 			if(entityArray[i].logic) {
 				entityArray[i].logic(dTime, tTime, entityArray);
@@ -468,16 +587,24 @@
 		}
 		var pos = piggen.pos;
 
+		skyBox.position.x = piggen.mesh.position.x;
+		skyBox.position.y = piggen.mesh.position.y;
+		skyBox.position.z = piggen.mesh.position.z;
+
 		pos.add(new THREE.Vector3(Math.cos(cameraObj.yaw) * Math.sin(cameraObj.pitch) * cameraObj.distance, Math.cos(cameraObj.pitch) * cameraObj.distance, Math.sin(cameraObj.yaw) * Math.sin(cameraObj.pitch) * cameraObj.distance));
 
-		systemCamera.position.set(pos.x, pos.y, pos.z);
+		systemCamera.position.set(pos.x, pos.y + 2.5, pos.z);
 		systemCamera.up = new THREE.Vector3(0, 1, 0);
-		systemCamera.lookAt(piggen.pos);
+		systemCamera.lookAt(piggen.pos.add(new THREE.Vector3(0, 2.5, 0)));
+
+		//faceCamera.up = new THREE.Vector3(0, 1, 0);
+		//faceCamera.position.set(piggen.pos.x + 4 * pDir.x, piggen.pos.y + 2.5 * pDir.z, piggen.pos.z);
+		//faceCamera.lookAt(piggen.pos.add(new THREE.Vector3(0, 2.5, 0)));
 	}
 	function render() {
 		systemRenderer.render(systemScene, systemCamera);
-		hudRenderer.render(hudScene, hudCamera);
-
+		//hudRenderer.render(hudScene, hudCamera);
+		faceRenderer.render(systemScene, faceCamera);
 	}
 	function ui() {
 		for(var i = 0; i < entityArray.length; i++) {
@@ -551,36 +678,48 @@
 			this.pitch = 0;
 			this.yaw = 0;
 			this.roll = 0;
+			this.dist = 0;
 		}
 		logic(dTime, tTime, entities) {
-			this.mesh.rotation.x = this.pitch;
+			this.mesh.rotation.y = this.pitch;
 			this.mesh.rotation.z = this.yaw;
-			this.mesh.rotation.y = this.roll;
+			this.mesh.rotation.x = this.roll;
 			//console.log(this.pitch, this.yaw, this.roll);
 			var tSize = 1 / 64;
+			var pDir = new THREE.Vector3(1, 0, 0);
+			pDir.applyMatrix4(navBallQ);
+			var celestial = this.findNearestCelestial(entities);
+			var dir = celestial.pos.sub(this.pos);
+			var gForce2 = 0.01 * (celestial.mass * this.mass) / (celestial.pos.distanceToSquared(this.pos));
 			while(dTime > 0) {
 				dTime -= tSize;
 				if(isThrusting) {
 					this.isGrounded = false;
 				}
 				if(!this.isGrounded) {
-					var celestial = this.findNearestCelestial(entities);
-					var dir = celestial.pos.sub(this.pos).normalize();
+					
+					dir = celestial.pos.sub(this.pos).normalize();
 					var tStep = tSize / 100;
 
 					this.mesh.position.x += tStep * (this.vel.x + tStep * this.acc.x / 2);
 					this.mesh.position.y += tStep * (this.vel.y + tStep * this.acc.y / 2);
 					this.mesh.position.z += tStep * (this.vel.z + tStep * this.acc.z / 2);
 
+					celestial = this.findNearestCelestial(entities);
 
-					var gForce2 = 0.01 * (celestial.mass * this.mass) / (celestial.pos.distanceToSquared(this.pos));
+					gForce2 = 0.01 * (celestial.mass * this.mass) / (celestial.pos.distanceToSquared(this.pos));
+					this.dist = Math.sqrt(celestial.pos.distanceToSquared(this.pos)) - celestial.size;
 					var tAccX2, tAccY2, tAccZ2;
 					//var pitch = this.pitch;
 					//var yaw = this.yaw;
 					//var pDir = new THREE.Vector3(Math.cos(yaw) * Math.cos(pitch), Math.sin(pitch), Math.sin(yaw) * Math.cos(pitch));
 					//console.log(this.pitch, this.yaw, this.roll);
-					var pDir = new THREE.Vector3(Math.cos(this.pitch) * Math.cos(this.yaw), Math.sin(this.yaw), Math.sin(this.pitch) * Math.cos(this.yaw));
+					//var pDir = new THREE.Vector3(Math.cos(this.pitch) * Math.cos(this.yaw), Math.sin(this.yaw), Math.sin(this.pitch) * Math.cos(this.yaw));
+					
 					//console.log(pDir);
+					//console.log(pDir);
+					pDir = new THREE.Vector3(1, 0, 0);
+					pDir.applyMatrix4(navBallQ);
 					var thrustModifier = 1.5;
 					if(isThrusting) {
 						tAccX2 = dir.x * gForce2 + pDir.x * thrustModifier;
@@ -621,6 +760,31 @@
 					this.mesh.position.z = this.target.pos.z + this.anchorLoc.z * this.target.size;
 				}
 			}
+
+			facingDir.vertices[0].set(this.pos.x, this.pos.y, this.pos.z);
+			facingDir.vertices[1].set(this.pos.x + pDir.x * 5, this.pos.y + pDir.y * 5, this.pos.z + pDir.z * 5);
+			facingDir.verticesNeedUpdate = true;
+
+			prograde.vertices[0].set(this.pos.x, this.pos.y, this.pos.z);
+			prograde.vertices[1].set(this.pos.x + this.vel.x * 5, this.pos.y + this.vel.y * 5, this.pos.z + this.vel.z * 5);
+			prograde.verticesNeedUpdate = true;
+
+			retrograde.vertices[0].set(this.pos.x, this.pos.y, this.pos.z);
+			retrograde.vertices[1].set(this.pos.x - this.vel.x * 5, this.pos.y - this.vel.y * 5, this.pos.z - this.vel.z * 5);
+			retrograde.verticesNeedUpdate = true;
+
+			if(!this.isGrounded) {
+				gravityDir.vertices[0].set(this.pos.x, this.pos.y, this.pos.z);
+				gravityDir.vertices[1].set(this.pos.x + dir.x * gForce2 * 2.5, this.pos.y + dir.y * gForce2 * 2.5, this.pos.z + dir.z * gForce2 * 2.5);
+				gravityDir.verticesNeedUpdate = true;
+			} else {
+				gravityDir.vertices[0].set(this.pos.x, this.pos.y, this.pos.z);
+				gravityDir.vertices[1].set(this.pos.x, this.pos.y, this.pos.z);
+				gravityDir.verticesNeedUpdate = true;
+			}
+
+
+			$("#altitude").html("Altitude<br>"+this.dist.toFixed(2) + "<br>" + this.vel.length().toFixed(2) + "u/s");
 		}
 		get acc() {
 			return this.acceleration;
@@ -663,8 +827,8 @@
 			this.mesh.position.x = what.pos.x;
 			this.mesh.position.y = what.pos.y;
 			this.mesh.position.z = what.pos.z;
-			this.mesh.rotation.x = what.pitch;
-			this.mesh.rotation.y = what.roll;
+			this.mesh.rotation.y = what.pitch;
+			this.mesh.rotation.x = what.roll;
 			this.mesh.rotation.z = what.yaw;
 			this.piggen = what;
 		}
@@ -673,6 +837,8 @@
 			this.mesh.position.x += tStep * (this.vel.x + tStep * this.acc.x / 2);
 			this.mesh.position.y += tStep * (this.vel.y + tStep * this.acc.y / 2);
 			this.mesh.position.z += tStep * (this.vel.z + tStep * this.acc.z / 2);
+			*/
+			/*
 			*/
 			var tSize = dTime;
 			var tStep = tSize / 100;
@@ -703,77 +869,6 @@
 			$("#"+this.uuid).css('left', Math.round((pos.x + 1) * window.innerWidth / 2))
 			$("#"+this.uuid).css('top', Math.round((-1 * pos.y + 1) * window.innerHeight / 2))
 
-
-			/*
-			this.mesh.rotation.x = this.pitch;
-			this.mesh.rotation.z = this.yaw;
-			this.mesh.rotation.y = this.roll;
-			//console.log(this.pitch, this.yaw, this.roll);
-			var tSize = 1 / 64;
-			while(dTime > 0) {
-				dTime -= tSize;
-				if(isThrusting) {
-					this.isGrounded = false;
-				}
-				if(!this.isGrounded) {
-					var celestial = this.findNearestCelestial(entities);
-					var dir = celestial.pos.sub(this.pos).normalize();
-					var tStep = tSize / 100;
-
-					this.mesh.position.x += tStep * (this.vel.x + tStep * this.acc.x / 2);
-					this.mesh.position.y += tStep * (this.vel.y + tStep * this.acc.y / 2);
-					this.mesh.position.z += tStep * (this.vel.z + tStep * this.acc.z / 2);
-
-
-					var gForce2 = 0.01 * (celestial.mass * this.mass) / (celestial.pos.distanceToSquared(this.pos));
-					var tAccX2, tAccY2, tAccZ2;
-					//var pitch = this.pitch;
-					//var yaw = this.yaw;
-					//var pDir = new THREE.Vector3(Math.cos(yaw) * Math.cos(pitch), Math.sin(pitch), Math.sin(yaw) * Math.cos(pitch));
-					//console.log(this.pitch, this.yaw, this.roll);
-					var pDir = new THREE.Vector3(Math.cos(this.pitch) * Math.cos(this.yaw), Math.sin(this.yaw), Math.sin(this.pitch) * Math.cos(this.yaw));
-					//console.log(pDir);
-					var thrustModifier = 1.5;
-					if(isThrusting) {
-						tAccX2 = dir.x * gForce2 + pDir.x * thrustModifier;
-						tAccY2 = dir.y * gForce2 + pDir.y * thrustModifier;
-						tAccZ2 = dir.z * gForce2 + pDir.z * thrustModifier;
-					} else {
-						tAccX2 = dir.x * gForce2;
-						tAccY2 = dir.y * gForce2;
-						tAccZ2 = dir.z * gForce2;
-					}
-					
-					this.velocity.x += tStep * (this.acc.x + tAccX2) / 2;
-					this.velocity.x *= 0.999999995;
-					this.velocity.y += tStep * (this.acc.y + tAccY2) / 2;
-					this.velocity.y *= 0.999999995;
-					this.velocity.z += tStep * (this.acc.z + tAccZ2) / 2;
-					this.velocity.z *= 0.999999995;
-
-					this.acceleration.x = tAccX2;
-					this.acceleration.y = tAccY2;
-					this.acceleration.z = tAccZ2;
-
-					if(this.pos.distanceTo(celestial.pos) < celestial.size) {
-						dir.negate();
-						this.mesh.position.x = celestial.pos.x + dir.x * celestial.size;
-						this.mesh.position.y = celestial.pos.y + dir.y * celestial.size;
-						this.mesh.position.z = celestial.pos.z + dir.z * celestial.size;
-						this.anchorLoc.x = dir.x;
-						this.anchorLoc.y = dir.y;
-						this.anchorLoc.z = dir.z;
-						this.isGrounded = true;
-						this.target = celestial;
-						this.velocity.set(0, 0, 0);
-					}
-				} else {
-					this.mesh.position.x = this.target.pos.x + this.anchorLoc.x * this.target.size;
-					this.mesh.position.y = this.target.pos.y + this.anchorLoc.y * this.target.size;
-					this.mesh.position.z = this.target.pos.z + this.anchorLoc.z * this.target.size;
-				}
-			}
-			*/
 		}
 		findNearestCelestial(entities) {
 			//Eventually refactor this so that it takes into sphere of influences, based on mass etc.
@@ -805,12 +900,43 @@
 			luna: "luna.png",
 			sol: "sol.png",
 			fe: "fe.png",
-			navball: "ball-texture.png"
+			navball: "ball-texture.png",
+			sky_back: "test_render_2_back.png",
+			sky_down: "test_render_2_down.png",
+			sky_front: "test_render_2_front.png",
+			sky_left: "test_render_2_left.png",
+			sky_right: "test_render_2_right.png",
+			sky_up: "test_render_2_up.png",
+			kat: "pre_kat.png",
+			kathelmet: "pre_kathelmet_interior.png",
+			soyuz: "pre_soyuz.png",
+			katsuit: "pre_katsuit.png",
+			katpack: "pre_katpack.png"
 		},
 		models: {
 			piggen: {
 				src: "piggen.obj",
 				texture: "piggen"
+			},
+			kat: {
+				src: "kat.obj",
+				texture: "kat"
+			},
+			kathelmet: {
+				src: "kathelmet_interior.obj",
+				texture: "kathelmet"
+			},
+			soyuz: {
+				src: "soyuz.obj",
+				texture: "soyuz"
+			},
+			katsuit: {
+				src: "katsuit_pack.obj",
+				texture: "katsuit"
+			},
+			katpack: {
+				src: "katpack.obj",
+				texture: "katpack"
 			}
 		}
 	};
