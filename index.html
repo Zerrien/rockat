@@ -22,15 +22,19 @@
 			.nameTag {
 				position: absolute;
 				color:white;
-				background-color:blue;
+				background-color: rgba(0, 0, 255, 0.75);
+				border: 1px solid white;
+				border-radius: 4px;
+				padding: 4px;
 				pointer-events:none;
+
 			}
 			#renderContainer {
 				border-radius: 32px;
 				position:absolute;
-				width: calc(100% - 256px);
+				width: calc(100% - 300px);
 				height: 80%;
-				left: 128px;
+				left: 0px;
 				top: 10%;
 			}
 			#header {
@@ -39,14 +43,15 @@
 			#header > img {
 				height: 10%;
 			}
-			#leftBanner {
-				position:absolute;
-				color:white;
-			}
 			#rightBanner {
 				position:absolute;
-				left: calc(100% - 128px);
+				left: calc(100% - 300px);
 				color:white;
+
+				display:flex;
+				align-items: center;
+				justify-content: center;
+				height:80%;
 			}
 			#altitude {
 				position:absolute;
@@ -58,6 +63,32 @@
 				font-family:monospace;
 				font-size:xx-large;
 			}
+			#footer {
+				position:absolute;
+				width: calc(100% - 300px);
+				top:90%;
+			}
+			#adTest {
+				width: 300px;
+				height:600px;
+			}
+			#nameForm {
+				position:absolute;
+				display: none;
+				width: 100%;
+				height: 100%;
+				background-color:rgba(0, 0, 0, 0.75);
+				z-index: 99999;
+			}
+			#formForm {
+				position:absolute;
+				width: 50%;
+				height: 50%;
+				left: 25%;
+				top: 25%;
+				text-align:center;
+				color:white;
+			}
 		</style>
 		<script src="./three.min.js"></script>
 		<script src="./OBJLoader.js"></script>
@@ -65,17 +96,52 @@
 		<script src="./bundle.js"></script>
 	</head>
 	<body>
+		<div id="nameForm">
+			<div id="formForm">
+				Pick a Name
+				<br>
+				<input id="nameField">
+				<br>
+				<button id="submitName" onclick="init()" disabled>Submit</button>
+				<script>
+					$("#nameField").on('input', function(e) {
+						if($(this).val() !== "") {
+							$("#submitName").attr('disabled', false);
+						} else {
+							$("#submitName").attr('disabled', 'disabled');
+						}
+					})
+				</script>
+			</div>
+		</div>
 		<div id="header">
 			<img src="roskatmos.png">
 		</div>
-		<div id="leftBanner">
-			Left
-		</div>
 		<div id="rightBanner">
-			Right
+		<!--
+			<div id="adTest">
+			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			<ins class="adsbygoogle"
+			     style="display:inline-block;width:300px;height:600px"
+			     data-ad-client="ca-pub-9874031524072589"
+			     data-ad-slot="1505083520"></ins>
+			<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+			</div>
+		-->
 		</div>
 		<div id="renderContainer">
-			<div id="altitude">Altitude<br>0</div>
+			<div id="altitude"></div>
+		</div>
+		<div id="footer">
+			🍆
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+				<input type="hidden" name="cmd" value="_s-xclick">
+				<input type="hidden" name="hosted_button_id" value="6WEE8KCZR8WSG">
+				<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+				<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+			</form>
 		</div>
 	</body>
 </html>

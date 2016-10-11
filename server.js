@@ -24,6 +24,7 @@ wss.on('connection', function connection(ws) {
 				case "piggen_update":
 					if(message.data.key === ws.key) {
 						ws.piggen = message.data.piggen;
+						ws.name = message.data.name;
 					} else {
 						console.log("Key mismatch... Naughty, naughty?");
 					}
@@ -46,6 +47,7 @@ wss.on('connection', function connection(ws) {
 						messageType: "world_update",
 						data: {
 							uuid: con.uuid,
+							name: con.name,
 							piggen: con.piggen
 						}
 					}));

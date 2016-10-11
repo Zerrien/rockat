@@ -47,8 +47,14 @@ module.exports = class GhostObject {
 		*/
 		var pos = new THREE.Vector3(this.piggen.pos.x, this.piggen.pos.y, this.piggen.pos.z);
 		pos.project(systemCamera);
-		$("#"+this.uuid).css('left', Math.round((pos.x + 1) * window.innerWidth / 2))
-		$("#"+this.uuid).css('top', Math.round((-1 * pos.y + 1) * window.innerHeight / 2))
+		if(pos.z > 1) {
+			$("#"+this.uuid).hide();	
+		} else {
+
+			$("#"+this.uuid).show();
+		}
+		$("#"+this.uuid).css('left', Math.round((pos.x + 1) * (window.innerWidth - 300) / 2))
+		$("#"+this.uuid).css('top', Math.round((-1 * pos.y + 1) * (window.innerHeight * 0.8) / 2) - 64)
 
 	}
 	findNearestCelestial(entities) {

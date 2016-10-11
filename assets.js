@@ -16,7 +16,10 @@ module.exports = {
 		kathelmet: "pre_kathelmet_interior.png",
 		soyuz: "pre_soyuz.png",
 		katsuit: "pre_katsuit.png",
-		katpack: "pre_katpack.png"
+		katpack: "pre_katpack.png",
+		katsuit_orange: "pre_katsuit2.png",
+		katsuit_blue: "pre_katsuit3.png",
+		ushanka: "pre_ushanka.png"
 	},
 	models: {
 		piggen: {
@@ -42,6 +45,10 @@ module.exports = {
 		katpack: {
 			src: "katpack.obj",
 			texture: "katpack"
+		},
+		ushanka: {
+			src: "ushanka.obj",
+			texture: "ushanka"
 		}
 	}
 };

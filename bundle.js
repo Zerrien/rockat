@@ -112,36 +112,49 @@
 	});
 
 	function loadAssets() {
+		console.log("HELLO");
 		var i = 0;
 		for(let key in assetsObj.textures) {
-			i++;
-			let src = assetsObj.textures[key];
-			assets.textures[key] = new THREE.Texture();
-			textureLoader.load(src, function(image) {
-				assets.textures[key].image = image;
-				assets.textures[key].needsUpdate = true;
-				if(--i === 0) {
-					init();
-				}
-			})
+			(function() {
+				var key2 = key;
+				i++;
+				let src = assetsObj.textures[key2];
+				assets.textures[key2] = new THREE.Texture();
+				textureLoader.load(src, function(image) {
+					assets.textures[key2].image = image;
+					assets.textures[key2].needsUpdate = true;
+					if(--i === 0) {
+						//init();
+						nameInit();
+					}
+				})
+			})();
 		}
 		for(let key in assetsObj.models) {
-			i++;
-			let obj = assetsObj.models[key];
-			assets.models[key] = null;
-			modelLoader.load(obj.src, function(mesh) {
-				mesh.traverse(function(child) {
-					if(child instanceof THREE.Mesh) {
-						child.material.map = assets.textures[obj.texture];
+			(function() {
+				var key2 = key;
+				i++;
+				let obj = assetsObj.models[key2];
+				assets.models[key2] = null;
+				modelLoader.load(obj.src, function(mesh) {
+					mesh.traverse(function(child) {
+						if(child instanceof THREE.Mesh) {
+							child.material.map = assets.textures[obj.texture];
+						}
+					});
+					assets.models[key2] = mesh;
+					console.log(key2);
+					//console.log(assets.models[key].clone());
+					if(--i === 0) {
+						//init();
+						nameInit();
 					}
 				});
-				assets.models[key] = mesh;
-				console.log(assets.models[key].clone());
-				if(--i === 0) {
-					init();
-				}
-			});
+			})();
 		}
+	}
+	function nameInit() {
+		$("#nameForm").show();
 	}
 
 	function setupScenes() {
@@ -172,9 +185,6 @@
 		systemScene.add(retroLine);
 		systemScene.add(gravityLine);
 		systemScene.add(facingLine);
-
-
-
 	}
 	var line;
 	var geo;
@@ -188,15 +198,15 @@
 		systemScene.add(sol.mesh);
 		entityArray.push(sol);
 
-		fe = new CelestialBody(16, assets.textures.fe, sol, sol.size * 4, 0.125 / 8 / 8 / 8 / 8, 128000 / 2);
+		fe = new CelestialBody(16, assets.textures.fe, sol, sol.size * 4, 0.125 / 8 / 8, 128000 / 2);
 		systemScene.add(fe.mesh);
 		entityArray.push(fe);
 		
-		terra = new CelestialBody(32, assets.textures.terra, sol, sol.size * 32, 0.125 / 32 / 8 / 8 / 8, 128000);
+		terra = new CelestialBody(32, assets.textures.terra, sol, sol.size * 32, 0.125 / 32 / 8 / 8 / 8 , 128000);
 		systemScene.add(terra.mesh);
 		entityArray.push(terra);
 		
-		luna = new CelestialBody(4, assets.textures.luna, terra, terra.size * 8, 0.125 / 32 / 8 / 8 / 8, 128000 / 16);
+		luna = new CelestialBody(4, assets.textures.luna, terra, terra.size * 8, 0.125 / 32 , 128000 / 32);
 		systemScene.add(luna.mesh);
 		entityArray.push(luna);
 
@@ -304,46 +314,50 @@
 	var ghosts = {
 
 	}
-	function init() {
+	window.init = function init() {
+		$("#nameForm").hide();
 		setupEventListeners();
 		setupScenes();
 		setupSystem();
 		ws = new WebSocket('ws://goaggro.com:3000');
 		ws.onopen = function() {
 			var interval = setInterval(function() {
-				ws.send(JSON.stringify({
-					messageType: "piggen_update",
-					data: {
-						key: key,
-						piggen: {
-							pos: {
-								x:piggen.pos.x,
-								y:piggen.pos.y,
-								z:piggen.pos.z
-							},
-							vel: {
-								x:piggen.vel.x,
-								y:piggen.vel.y,
-								z:piggen.vel.z
-							},
-							acc: {
-								x:piggen.acc.x,
-								y:piggen.acc.y,
-								z:piggen.acc.z
-							},
-							pitch: piggen.pitch,
-							yaw: piggen.yaw,
-							roll: piggen.roll,
-							isGrounded:piggen.isGrounded,
-							anchorLoc:{
-								x:piggen.anchorLoc.x,
-								y:piggen.anchorLoc.y,
-								z:piggen.anchorLoc.z
+				if(key) {
+					ws.send(JSON.stringify({
+						messageType: "piggen_update",
+						data: {
+							name: $("#nameField").val(),
+							key: key,
+							piggen: {
+								pos: {
+									x:piggen.pos.x,
+									y:piggen.pos.y,
+									z:piggen.pos.z
+								},
+								vel: {
+									x:piggen.vel.x,
+									y:piggen.vel.y,
+									z:piggen.vel.z
+								},
+								acc: {
+									x:piggen.acc.x,
+									y:piggen.acc.y,
+									z:piggen.acc.z
+								},
+								pitch: piggen.pitch,
+								yaw: piggen.yaw,
+								roll: piggen.roll,
+								isGrounded:piggen.isGrounded,
+								anchorLoc:{
+									x:piggen.anchorLoc.x,
+									y:piggen.anchorLoc.y,
+									z:piggen.anchorLoc.z
+								}
 							}
 						}
-					}
 
-				}))
+					}))
+				}
 			}, 10);
 			ws.onclose = function() {
 				window.clearInterval(interval);
@@ -362,6 +376,7 @@
 						case "world_update":
 							if(ghosts[message.data.uuid]) {
 								ghosts[message.data.uuid].piggen = message.data.piggen;
+								ghosts[message.data.uuid].name = message.data.name;
 								ghosts[message.data.uuid].obj.update(message.data.piggen);
 							} else {
 								console.log("New ghost detected.");
@@ -369,6 +384,7 @@
 									piggen: message.data.piggen,
 									obj: new GhostObject(assets.models.katsuit.clone(), message.data.piggen)
 								}
+								ghosts[message.data.uuid].name = message.data.name;
 								var t = ghosts[message.data.uuid].obj.mesh;
 								var katface = assets.models.kat.clone();
 								t.add(katface)
@@ -383,12 +399,13 @@
 								ghosts[message.data.uuid].dom = nameTag
 								nameTag.addClass("nameTag");
 
-								nameTag.text(message.data.uuid);
-								$("body").append(nameTag);
+								nameTag.text(message.data.name);
+								$("#renderContainer").append(nameTag);
 								var pos = new THREE.Vector3(piggen.pos.x, piggen.pos.y, piggen.pos.z);
 								pos.project(systemCamera);
-								nameTag.css('left', Math.round((pos.x + 1) * (window.innerWidth -256) / 2))
-								nameTag.css('top', Math.round((-1 * pos.y + 1) * (window.innerHeight * 0.8) / 2))
+
+								nameTag.css('left', Math.round((pos.x + 1) * (window.innerWidth - 300) / 2))
+								nameTag.css('top', Math.round(window.innerHeight * 0.1 + (-1 * pos.y + 1) * (window.innerHeight * 0.8) / 2))
 								nameTag.attr("id", message.data.uuid);
 								console.log(message.data.uuid);
 
@@ -866,8 +883,14 @@
 			*/
 			var pos = new THREE.Vector3(this.piggen.pos.x, this.piggen.pos.y, this.piggen.pos.z);
 			pos.project(systemCamera);
-			$("#"+this.uuid).css('left', Math.round((pos.x + 1) * window.innerWidth / 2))
-			$("#"+this.uuid).css('top', Math.round((-1 * pos.y + 1) * window.innerHeight / 2))
+			if(pos.z > 1) {
+				$("#"+this.uuid).hide();	
+			} else {
+
+				$("#"+this.uuid).show();
+			}
+			$("#"+this.uuid).css('left', Math.round((pos.x + 1) * (window.innerWidth - 300) / 2))
+			$("#"+this.uuid).css('top', Math.round((-1 * pos.y + 1) * (window.innerHeight * 0.8) / 2) - 64)
 
 		}
 		findNearestCelestial(entities) {
@@ -911,7 +934,11 @@
 			kathelmet: "pre_kathelmet_interior.png",
 			soyuz: "pre_soyuz.png",
 			katsuit: "pre_katsuit.png",
-			katpack: "pre_katpack.png"
+			katpack: "pre_katpack.png",
+			katsuit_orange: "pre_katsuit_orange.png",
+			katpack_orange: "pre_katpack_orange.png",
+			katsuit_blue: "pre_katsuit_blue.png",
+			katpack_blue: "pre_katpack_blue.png"
 		},
 		models: {
 			piggen: {
