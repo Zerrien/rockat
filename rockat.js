@@ -9,23 +9,21 @@ var assets = {
 	models: {}
 };
 
-var systemRenderer = new THREE.WebGLRenderer();
-systemRenderer.setSize((window.innerWidth -256), (window.innerHeight * 0.8));
-var systemScene = new THREE.Scene();
-window.systemCamera = new THREE.PerspectiveCamera(60, (window.innerWidth -256) / (window.innerHeight * 0.8), 1, 10000000);
-var hudRenderer = new THREE.WebGLRenderer({alpha:true});
-hudRenderer.setSize((window.innerWidth -256), (window.innerHeight * 0.8));
-var hudScene = new THREE.Scene();
-var hudCamera = new THREE.OrthographicCamera(-(window.innerWidth -256) / 2, (window.innerWidth -256) / 2, -(window.innerHeight * 0.8) / 2, (window.innerHeight * 0.8) / 2, 1, 10000);
-hudCamera.position.z = -1000;
-hudCamera.up = new THREE.Vector3(0, 1, 0);
-hudCamera.lookAt(new THREE.Vector3(0, 0, 0));
+window.sounds = [];
+window.soundIndex = 0;
+for(var i = 0; i < 10; i++) {
+	sounds.push(new Audio('plop'+((i % 5)+1)+'.wav'))
+	sounds[i].volume = 0.125;
+}
+
+
 
 var faceRenderer = new THREE.WebGLRenderer();
 faceRenderer.setSize(128, 128);
 var faceCamera = new THREE.PerspectiveCamera(30, 1, 1, 10000000);
 
 var terra, luna, sol, fe;
+var rojo, wasser, igloo;
 var piggen;
 var navBall;
 var skyBox;
@@ -66,7 +64,6 @@ $(function() {
 });
 
 function loadAssets() {
-	console.log("HELLO");
 	var i = 0;
 	for(let key in assetsObj.textures) {
 		(function() {
@@ -97,7 +94,6 @@ function loadAssets() {
 					}
 				});
 				assets.models[key2] = mesh;
-				console.log(key2);
 				//console.log(assets.models[key].clone());
 				if(--i === 0) {
 					//init();
@@ -121,11 +117,13 @@ function setupScenes() {
 	systemScene.add( point );
 	$("#renderContainer").append(systemRenderer.domElement);
 
+	/*
 	var hudElem = hudRenderer.domElement;
 	hudElem.style.position = "absolute";
 	hudElem.style.left = 0;
 	hudElem.style.top = 0;
 	$("#renderContainer").append(hudElem);
+	*/
 
 	var faceElem = faceRenderer.domElement;
 	faceElem.style.position = "absolute";
@@ -144,7 +142,7 @@ var line;
 var geo;
 var mat;
 function setupSystem() {
-	sol = new CelestialBody(128 * 10, assets.textures.sol, null, 0, 0, 128000 * 100 * 1000);
+	sol = new CelestialBody(128 * 10, assets.textures.sol, null, 0, 0, 128000 * 100 * 1000, "Sol");
 	sol.material.emissiveMap = assets.textures.sol;
 	sol.material.emissive.r = 1;
 	sol.material.emissive.g = 1;
@@ -152,18 +150,29 @@ function setupSystem() {
 	systemScene.add(sol.mesh);
 	entityArray.push(sol);
 
-	fe = new CelestialBody(16, assets.textures.fe, sol, sol.size * 4, 0.125 / 8 / 8, 128000 / 2);
+	fe = new CelestialBody(16, assets.textures.fe, sol, sol.size * 4, 0.125 / 8, 128000 / 2, "Fe");
 	systemScene.add(fe.mesh);
 	entityArray.push(fe);
 	
-	terra = new CelestialBody(32, assets.textures.terra, sol, sol.size * 32, 0.125 / 32 / 8 / 8 / 8 , 128000);
+	terra = new CelestialBody(32, assets.textures.terra, sol, sol.size * 32, 0.125 / 32 / 8 / 8 / 8 , 128000, "Terra");
 	systemScene.add(terra.mesh);
 	entityArray.push(terra);
 	
-	luna = new CelestialBody(4, assets.textures.luna, terra, terra.size * 8, 0.125 / 32 , 128000 / 32);
+	luna = new CelestialBody(4, assets.textures.luna, terra, terra.size * 8, 0.125 / 32 , 128000 / 32, "Luna");
 	systemScene.add(luna.mesh);
 	entityArray.push(luna);
 
+	rojo = new CelestialBody(48, assets.textures.rojo, sol, sol.size * 16, 0.125 / 32 / 8 / 8, 128000, "Rojo");
+	systemScene.add(rojo.mesh);
+	entityArray.push(rojo);
+
+	wasser = new CelestialBody(128, assets.textures.wasser, sol, sol.size * 64, 0.125 / 32 / 8 / 8 / 8, 128000 * 8, "Wasser");
+	systemScene.add(wasser.mesh);
+	entityArray.push(wasser);
+
+	igloo = new CelestialBody(8, assets.textures.igloo, sol, sol.size * 128, 0.125 / 32 / 8 / 8 / 8 , 128000, "Igloo");
+	systemScene.add(igloo.mesh);
+	entityArray.push(igloo);
 
 	var MAX_POINTS = 500;
 	var geometry = new THREE.BufferGeometry();
@@ -177,17 +186,28 @@ function setupSystem() {
 	//systemScene.add( line );
 
 	for(var i = 0; i < 1; i++) {
-		piggen = new PhysicsObject(assets.models.katsuit.clone(), terra, 1);
+
+		var isDonator;
+		if(document.URL.match(/donater=(1+)/)) {
+			isDonator = true;
+		} else {
+			isDonator = false;
+		}
+		if(isDonator) {
+			piggen = new PhysicsObject(assets.models.katsuit_orange.clone(), terra, 1);
+			var katpack = assets.models.katpack_orange.clone();
+			piggen.mesh.add(katpack)
+			var ushank = assets.models.ushanka.clone();
+			piggen.mesh.add(ushank);
+		} else {
+			piggen = new PhysicsObject(assets.models.katsuit.clone(), terra, 1);
+			var katpack = assets.models.katpack.clone();
+			piggen.mesh.add(katpack)
+		}
+
 		piggen.mesh.add(faceCamera);
-		/*
-		//faceCamera.up = new THREE.Vector3(0, 1, 0);
-	//faceCamera.position.set(piggen.pos.x + 4 * pDir.x, piggen.pos.y + 2.5 * pDir.z, piggen.pos.z);
-	//faceCamera.lookAt(piggen.pos.add(new THREE.Vector3(0, 2.5, 0)));
-		*/
 		var katface = assets.models.kat.clone();
 		piggen.mesh.add(katface)
-		var katpack = assets.models.katpack.clone();
-		piggen.mesh.add(katpack)
 		var kathelm = assets.models.kathelmet.clone();
 		piggen.mesh.add(kathelm);
 		systemScene.add(piggen.mesh);
@@ -198,7 +218,11 @@ function setupSystem() {
 		//piggen.mesh.position.z = terra.pos.z - 40 + Math.random() * 80;
 		//piggen.velocity.x = 4;
 		//piggen.isGrounded = false;
-		piggen.mesh.scale.set(0.5,0.5,0.5);
+		if(isDonator) {
+			piggen.mesh.scale.set(0.75,0.75,0.75);
+		} else {
+			piggen.mesh.scale.set(0.5,0.5,0.5);
+		}
 		faceCamera.up = new THREE.Vector3(0, 1, 0);
 		faceCamera.position.set(8, 5, 0);
 		faceCamera.lookAt(new THREE.Vector3(0, 5, 0));
@@ -210,7 +234,7 @@ function setupSystem() {
 	navBall = new THREE.Mesh(geo, mat);
 	navBall.position.y = (window.innerHeight * 0.8) / 2 - 100;
 	//hudScene.add(navBall);
-	hudScene.add(new THREE.AmbientLight(0xFFFFFF));
+	//hudScene.add(new THREE.AmbientLight(0xFFFFFF));
 	navBall.target = piggen;
 
 	geo = new THREE.SphereGeometry(5, 8, 8);
@@ -239,6 +263,10 @@ function setupSystem() {
 }
 
 function setupEventListeners() {
+	window.onresize = function(e) {
+		systemRenderer.setSize(($("#renderContainer").innerWidth()), (window.innerHeight * 0.8));
+		window.systemCamera = new THREE.PerspectiveCamera(60, ($("#renderContainer").innerWidth()) / (window.innerHeight * 0.8), 1, 10000000);
+	}
 	window.onwheel = function(e) {
 		mouse.deltaY = e.deltaY;
 	}
@@ -268,12 +296,40 @@ var key;
 var ghosts = {
 
 }
+var systemRenderer, systemScene;
 window.init = function init() {
+	;
+	
+	systemRenderer = new THREE.WebGLRenderer();
+	systemRenderer.setSize(($("#renderContainer").innerWidth()), (window.innerHeight * 0.8));
+	//systemRenderer.setSize(($("#renderContainer").innerWidth()), (window.innerHeight * 0.8));
+	systemScene = new THREE.Scene();
+	window.systemCamera = new THREE.PerspectiveCamera(60, ($("#renderContainer").innerWidth()) / (window.innerHeight * 0.8), 1, 10000000);
+	/*
+	var hudRenderer = new THREE.WebGLRenderer({alpha:true});
+	hudRenderer.setSize(($("#renderContainer").innerWidth()), (window.innerHeight * 0.8));
+	var hudScene = new THREE.Scene();
+	var hudCamera = new THREE.OrthographicCamera(-($("#renderContainer").innerWidth()) / 2, ($("#renderContainer").innerWidth()) / 2, -(window.innerHeight * 0.8) / 2, (window.innerHeight * 0.8) / 2, 1, 10000);
+	hudCamera.position.z = -1000;
+	hudCamera.up = new THREE.Vector3(0, 1, 0);
+	hudCamera.lookAt(new THREE.Vector3(0, 0, 0));
+	*/
+
+
+
+
+	$(".planetContainer").tooltip();
 	$("#nameForm").hide();
 	setupEventListeners();
 	setupScenes();
 	setupSystem();
 	ws = new WebSocket('ws://localhost:3000');
+	var isDonator;
+	if(document.URL.match(/donater=(1+)/)) {
+		isDonator = true;
+	} else {
+		isDonator = false;
+	}
 	ws.onopen = function() {
 		var interval = setInterval(function() {
 			if(key) {
@@ -282,6 +338,7 @@ window.init = function init() {
 					data: {
 						name: $("#nameField").val(),
 						key: key,
+						isDonator: isDonator,
 						piggen: {
 							pos: {
 								x:piggen.pos.x,
@@ -326,42 +383,127 @@ window.init = function init() {
 						uuid = message.data.uuid;
 						tTime = message.data.tTime;
 						key = message.data.key;
+						var nameTag = $("<div>");
+						var nameEmote = $("<div>");
+						nameTag.append(nameEmote);
+						
+						nameEmote.addClass("emote")
+						nameTag.addClass("nameTag");
+						nameTag.attr('id', message.data.uuid);
+						var nameText = $("<div>");
+						nameText.text($("#nameField").val().substring(0, 12) + (isDonator ? " 💵" : ""));
+						nameTag.append(nameText);
+						if(isDonator) {
+							nameTag.addClass("isDonator");
+						}
+						$("#renderContainer").append(nameTag);
+						nameTag.css("left", "calc(100% - 128px - 32px + 64px - "+nameTag.outerWidth()/2+"px)");
+						nameTag.css("top", "calc(100% - 128px - 32px + 128px - "+nameTag.outerHeight()+"px)");
+
+						var chatlog = $("<div>").addClass("chat");
+						if(isDonator) {
+							chatlog.addClass("subchat");
+						}
+						chatlog.text($("#nameField").val().substring(0, 12) + (isDonator ? " 💵" : "") + " has joined.");
+						$("#log").append(chatlog)
+						setTimeout(function() {
+							$("#log :first-child").remove();
+						}, 3000);
+
+
 						break;
 					case "world_update":
 						if(ghosts[message.data.uuid]) {
 							ghosts[message.data.uuid].piggen = message.data.piggen;
 							ghosts[message.data.uuid].name = message.data.name;
 							ghosts[message.data.uuid].obj.update(message.data.piggen);
+							console.log()
+							if(message.data.emote !== -1) {
+								console.log($("#"+message.data.uuid+" .emote"));
+								$("#"+message.data.uuid+" .emote").append($("<img>").attr("src", "em"+message.data.emote+".png"));
+								setTimeout(function() {
+									$("#"+message.data.uuid+" .emote").text("");
+								}, 3000);
+								//console.log("EMOTE DETECTED!");
+							}
 						} else {
 							console.log("New ghost detected.");
+							var tDon = message.data.isDonator;
+							var tobj;
+							if(tDon) {
+								tobj =  new GhostObject(assets.models.katsuit_orange.clone(), message.data.piggen)
+								tobj.isDonate = true;
+							} else {
+								tobj =  new GhostObject(assets.models.katsuit.clone(), message.data.piggen)
+							}
+
+							tobj.charName = message.data.name.substring(0, 12) + (message.data.isDonator ? " 💵" : "");
 							ghosts[message.data.uuid] = {
 								piggen: message.data.piggen,
-								obj: new GhostObject(assets.models.katsuit.clone(), message.data.piggen)
+								obj: tobj
 							}
+							var chatlog = $("<div>").addClass("chat");
+							if(tDon) {
+								chatlog.addClass("subchat");
+							}
+							chatlog.text(message.data.name.substring(0, 12) + (message.data.isDonator ? " 💵" : "") + " has joined.");
+							$("#log").append(chatlog)
+							setTimeout(function() {
+								$("#log :first-child").remove();
+							}, 3000);
 							ghosts[message.data.uuid].name = message.data.name;
 							var t = ghosts[message.data.uuid].obj.mesh;
 							var katface = assets.models.kat.clone();
 							t.add(katface)
-							var katpack = assets.models.katpack.clone();
-							t.add(katpack)
+							//var katpack = assets.models.katpack.clone();
+							//t.add(katpack)
 							var kathelm = assets.models.kathelmet.clone();
 							t.add(kathelm);
-							ghosts[message.data.uuid].obj.mesh.scale.set(0.5, 0.5, 0.5);
-
+							if(tDon) {
+								t.add(assets.models.ushanka.clone());
+								ghosts[message.data.uuid].obj.mesh.scale.set(0.75, 0.75, 0.75);
+								var katpack = assets.models.katpack_orange.clone();
+								t.add(katpack)
+							} else {
+								ghosts[message.data.uuid].obj.mesh.scale.set(0.5, 0.5, 0.5);
+								var katpack = assets.models.katpack.clone();
+								t.add(katpack)
+							}
 							ghosts[message.data.uuid].obj.uuid = message.data.uuid
 							var nameTag = $("<div>");
 							ghosts[message.data.uuid].dom = nameTag
 							nameTag.addClass("nameTag");
 
-							nameTag.text(message.data.name);
+							var nameEmote = $("<div>");
+							nameEmote.addClass("emote");
+							nameTag.append(nameEmote);
+							var nameText = $("<div>");
+							nameText.text(message.data.name.substring(0, 12) + (message.data.isDonator ? " 💵" : ""));
+							nameTag.append(nameText);
+
+
+							/*
+							var nameTag = $("<div>");
+						var nameEmote = $("<div>");
+						nameTag.append(nameEmote);
+						
+						nameEmote.addClass("emote")
+						nameTag.addClass("nameTag");
+						nameTag.attr('id', message.data.uuid);
+						var nameText = $("<div>");
+						nameText.text($("#nameField").val().substring(0, 12) + (isDonator ? " 💵" : ""));
+						nameTag.append(nameText);
+							*/
 							$("#renderContainer").append(nameTag);
+							if(message.data.isDonator) {
+								nameTag.addClass('isDonator')
+							}
 							var pos = new THREE.Vector3(piggen.pos.x, piggen.pos.y, piggen.pos.z);
 							pos.project(systemCamera);
 
 							nameTag.css('left', Math.round((pos.x + 1) * (window.innerWidth - 300) / 2))
 							nameTag.css('top', Math.round(window.innerHeight * 0.1 + (-1 * pos.y + 1) * (window.innerHeight * 0.8) / 2))
 							nameTag.attr("id", message.data.uuid);
-							console.log(message.data.uuid);
 
 							systemScene.add(ghosts[message.data.uuid].obj.mesh);
 							entityArray.push(ghosts[message.data.uuid].obj);
@@ -412,7 +554,65 @@ function main() {
 	render();
 	pTime = sTime;
 }
+var canEmote = true;
+function doEmoji(n) {
+	$("#"+uuid + " .emote").append($("<img>").attr("src", "em"+n+".png"));
+	canEmote = false;
+	ws.send(JSON.stringify({
+		messageType: "emote",
+		data: {
+			key: key,
+			num: n
+		}
+	}));
+	setTimeout(function() {
+		$("#"+uuid + " .emote").html("");
+		canEmote = true;
+	}, 3000);
+}
 function control() {
+	// 48 -> 57
+	if(canEmote) {
+		if(keyArray[48]) {
+			doEmoji(0);
+		}
+		if(keyArray[49]) {
+			doEmoji(1);
+			
+		}
+		if(keyArray[50]) {
+			doEmoji(2);
+			
+		}
+		if(keyArray[51]) {
+			doEmoji(3);
+			
+		}
+		if(keyArray[52]) {
+			doEmoji(4);
+			
+		}
+		if(keyArray[53]) {
+			doEmoji(5);
+			
+		}
+		if(keyArray[54]) {
+			doEmoji(6);
+			
+		}
+		if(keyArray[55]) {
+			doEmoji(7);
+			
+		}
+		if(keyArray[56]) {
+			doEmoji(8);
+			
+		}
+		if(keyArray[57]) {
+			doEmoji(9);
+
+		}
+	}
 	if(mouse.isHeld) {
 		mouse.isHeld = false;
 		cameraObj.oYaw = cameraObj.yaw;
@@ -420,7 +620,7 @@ function control() {
 		cameraObj.oRoll = cameraObj.roll;
 	}
 	if(mouse.isDown) {
-		cameraObj.yaw = cameraObj.oYaw + (mouse.curPos.x - mouse.clickPos.x) / (window.innerWidth -256) * Math.PI * 2;
+		cameraObj.yaw = cameraObj.oYaw + (mouse.curPos.x - mouse.clickPos.x) / ($("#renderContainer").innerWidth()) * Math.PI * 2;
 		cameraObj.pitch = Math.min(Math.max(cameraObj.oPitch + (mouse.curPos.y - mouse.clickPos.y) / (window.innerHeight * 0.8) * Math.PI * 2, -Math.PI + 0.0000001), -0.0000001);
 	}
 	if(mouse.deltaY !== 0) {
@@ -526,10 +726,6 @@ facingDir.vertices.push(
 )
 var facingLine = new THREE.Line(facingDir, facingMat);
 facingLine.frustumCulled = false;
-
-
-
-
 
 
 /*

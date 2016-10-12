@@ -18,8 +18,13 @@ module.exports = {
 		katsuit: "pre_katsuit.png",
 		katpack: "pre_katpack.png",
 		katsuit_orange: "pre_katsuit2.png",
+		katpack_orange: "pre_katpack_orange.png",
 		katsuit_blue: "pre_katsuit3.png",
-		ushanka: "pre_ushanka.png"
+		katpack_blue: "pre_katpack_blue.png",
+		ushanka: "pre_ushanka.png",
+		rojo: "rojo.png",
+		wasser: "wasser.png",
+		igloo: "igloo.png"
 	},
 	models: {
 		piggen: {
@@ -45,6 +50,14 @@ module.exports = {
 		katpack: {
 			src: "katpack.obj",
 			texture: "katpack"
+		},
+		katsuit_orange: {
+			src: "katsuit_pack.obj",
+			texture: "katsuit_orange"
+		},
+		katpack_orange: {
+			src: "katpack.obj",
+			texture: "katpack_orange"
 		},
 		ushanka: {
 			src: "ushanka.obj",

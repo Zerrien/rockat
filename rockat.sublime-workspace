@@ -1,1 +1,1516 @@
-{}
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"messa",
+				"messageType"
+			],
+			[
+				"is",
+				"isDonator"
+			],
+			[
+				"align-",
+				"align-items"
+			],
+			[
+				"face",
+				"faceRenderer"
+			],
+			[
+				"render",
+				"renderContainer"
+			],
+			[
+				"system",
+				"systemScene"
+			],
+			[
+				"asset",
+				"assets"
+			],
+			[
+				"hud",
+				"hudScene"
+			],
+			[
+				"pos",
+				"position"
+			],
+			[
+				"dis",
+				"distanceToSquared"
+			],
+			[
+				"pso",
+				"position"
+			],
+			[
+				"acc",
+				"acceleration"
+			],
+			[
+				"geo",
+				"geometry"
+			],
+			[
+				"neaes",
+				"nearestDist"
+			],
+			[
+				"enti",
+				"entity"
+			],
+			[
+				"tex",
+				"textures"
+			],
+			[
+				"sys",
+				"systemScene"
+			],
+			[
+				"syst",
+				"systemScene"
+			],
+			[
+				"nearest",
+				"nearestCelestial"
+			],
+			[
+				"ME",
+				"MeshBasicMaterial"
+			],
+			[
+				"piggen",
+				"piggenPhysics"
+			],
+			[
+				"camera",
+				"cameraObj"
+			],
+			[
+				"textureCoo",
+				"textureCoordAttribute"
+			],
+			[
+				"cubeVertices",
+				"cubeVerticesTextureCoordBuffer"
+			],
+			[
+				"squareVer",
+				"squareVerticesColorBuffer"
+			],
+			[
+				"verrt",
+				"vertexColorAttribute"
+			],
+			[
+				"aVer",
+				"aVertexColor"
+			],
+			[
+				"squareV",
+				"squareVerticesColorBuffer"
+			],
+			[
+				"vertex",
+				"vertexPositionAttribute"
+			],
+			[
+				"ar",
+				"artisan"
+			],
+			[
+				"class",
+				"classDetails"
+			],
+			[
+				"spe",
+				"specialties"
+			],
+			[
+				"inser",
+				"insertResult"
+			],
+			[
+				"pre",
+				"prepare"
+			],
+			[
+				"json",
+				"json_encode"
+			],
+			[
+				"quer",
+				"queried"
+			],
+			[
+				"que",
+				"queried"
+			],
+			[
+				"tool",
+				"tooltipText"
+			],
+			[
+				"entity",
+				"entityArray"
+			],
+			[
+				"edito",
+				"editorContainer"
+			],
+			[
+				"pathhan",
+				"pathhandler"
+			],
+			[
+				"con",
+				"condense"
+			],
+			[
+				"key",
+				"keyHook"
+			],
+			[
+				"quest",
+				"querySelectorAll"
+			],
+			[
+				"editor",
+				"editorDiv"
+			],
+			[
+				"textarea",
+				"textareas"
+			],
+			[
+				"text",
+				"textarea"
+			],
+			[
+				"texta",
+				"textarea"
+			],
+			[
+				"com",
+				"compiled"
+			],
+			[
+				"time",
+				"timestamp"
+			],
+			[
+				"compil",
+				"compiledStack"
+			],
+			[
+				"campa",
+				"Campaign"
+			],
+			[
+				"campaign",
+				"campaignSlug"
+			],
+			[
+				"camp",
+				"campCollection"
+			],
+			[
+				"admin",
+				"isAdmin"
+			],
+			[
+				"cle",
+				"clearPlayback"
+			],
+			[
+				"el",
+				"elapsedTime"
+			],
+			[
+				"in",
+				"includedCampaigns"
+			],
+			[
+				"cam",
+				"Campaign"
+			],
+			[
+				"level",
+				"levelCampaign"
+			],
+			[
+				"un",
+				"unloadedAnalytics"
+			],
+			[
+				"load",
+				"loadedLevels"
+			],
+			[
+				"process",
+				"processAnalytics"
+			],
+			[
+				"ac",
+				"activated"
+			],
+			[
+				"upd",
+				"updateLines"
+			],
+			[
+				"proce",
+				"processedThangs"
+			],
+			[
+				"ex",
+				"excludedCampaigns"
+			],
+			[
+				"pro",
+				"problems"
+			],
+			[
+				"problem",
+				"problemCount"
+			],
+			[
+				"filt",
+				"filteredTasks"
+			],
+			[
+				"exc",
+				"excludedSimulationLevels"
+			],
+			[
+				"solu",
+				"solutionIndex"
+			],
+			[
+				"exclu",
+				"excludedSimulationLevels"
+			],
+			[
+				"sol",
+				"solutionIndex"
+			],
+			[
+				"programm",
+				"programmableMethod"
+			],
+			[
+				"super",
+				"supermodel"
+			],
+			[
+				"requires",
+				"requiresSubscription"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 6079,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "rockat.js",
+			"settings":
+			{
+				"buffer_size": 20559,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "PhysicsObject.js",
+			"settings":
+			{
+				"buffer_size": 5855,
+				"encoding": "UTF-8",
+				"line_ending": "Windows",
+				"name": "module.exports = class ? {"
+			}
+		},
+		{
+			"file": "CelestialBody.js",
+			"settings":
+			{
+				"buffer_size": 1058,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "server.js",
+			"settings":
+			{
+				"buffer_size": 5016,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "assets.js",
+			"settings":
+			{
+				"buffer_size": 1421,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "GhostObject.js",
+			"settings":
+			{
+				"buffer_size": 2933,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"pack contr ins",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 485.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/wamp64/www/rockat"
+	],
+	"file_history":
+	[
+		"/C/wamp64/www/rockat/bundle.js",
+		"/C/wamp64/www/rockat/assets.js",
+		"/C/wamp64/www/rockat/server.js",
+		"/C/wamp64/www/rockat/rocket.js",
+		"/C/wamp64/www/rockat/CelestialBody.js",
+		"/C/wamp64/www/rockat/rockat2.js",
+		"/C/wamp64/www/rockat/rockat.sublime-project",
+		"/C/wamp64/www/rockat/box.obj",
+		"/C/wamp64/www/rockat/glUtils.js",
+		"/C/wamp64/www/rockat/sylvester.js",
+		"/C/wamp64/www/rockat/OBJLoader.js",
+		"/C/wamp64/www/rockat/index2.html",
+		"/C/wamp64/www/aws/aws.sublime-project",
+		"/C/wamp64/www/aws/gather_desired_specialties.php",
+		"/C/wamp64/www/aws/save_email.php",
+		"/C/wamp64/www/aws/src/index.js",
+		"/C/wamp64/www/aws/bundle.js",
+		"/C/wamp64/www/aws/check_hash.php",
+		"/C/wamp64/www/aws/index.html",
+		"/C/wamp64/www/aws/file.html",
+		"/C/wamp64/www/aws/index.js",
+		"/C/wamp64/www/aws/levels.js",
+		"/C/Users/Serg/Projects/aws/sdether-josh.js-1a4ef27/js/shell.js",
+		"/C/Users/Serg/Projects/aws/tooltips.html",
+		"/Users/joshcallebaut/Desktop/aws/package.json",
+		"/Users/joshcallebaut/Desktop/spade.js/package.json",
+		"/Users/joshcallebaut/Desktop/aws/aws.sublime-project",
+		"/Users/joshcallebaut/Desktop/spade.js/snapshot.png",
+		"/Users/joshcallebaut/Desktop/spade.js/karma.conf.js",
+		"/Users/joshcallebaut/Desktop/spade.js/wdio.conf.js",
+		"/Users/joshcallebaut/Desktop/spade.js/tests/unit/spade_u.spec.js",
+		"/Users/joshcallebaut/Desktop/spade.js/tests/integration/spade_i.spec.js",
+		"/Users/joshcallebaut/Desktop/spade.js/webpack.config.js",
+		"/Users/joshcallebaut/Desktop/spade.js/codecept.json",
+		"/Users/joshcallebaut/Desktop/spade.js/test/specs/test.js",
+		"/Users/joshcallebaut/Desktop/spade.js/features/test.js",
+		"/Users/joshcallebaut/Desktop/spade.js/test/test.js",
+		"/Users/joshcallebaut/Desktop/spade.js/tests/spadeTest.js",
+		"/Users/joshcallebaut/Desktop/spade.js/output/ole2.png",
+		"/Users/joshcallebaut/Desktop/spade.js/tests/login/test_thing.js",
+		"/Users/joshcallebaut/Desktop/spade.js/output/I_am_typing_into_a_text_area..failed.png",
+		"/Users/joshcallebaut/Desktop/spade.js/index.html",
+		"/Users/joshcallebaut/Desktop/spade.js/test/features/test.js",
+		"/Users/joshcallebaut/Desktop/spade.js/hello.js",
+		"/Users/joshcallebaut/Desktop/spade.js/index.js",
+		"/Users/joshcallebaut/Desktop/spade.js/steps_file.js",
+		"/Users/joshcallebaut/Desktop/spade.js/start_test.js",
+		"/Users/joshcallebaut/Desktop/spade.js/spade.js",
+		"/Users/joshcallebaut/Desktop/spade.js/test/webpack.config.js",
+		"/Users/joshcallebaut/Desktop/spade.js/spadeRedux.js",
+		"/Users/joshcallebaut/Desktop/spade.js/tests.js",
+		"/Users/joshcallebaut/Desktop/codecombat/app/templates/admin/codelogs-view.jade",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/admin/CodeLogs.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/templates/artisans/level-tasks-view.jade",
+		"/Users/joshcallebaut/Desktop/codecombat/app/styles/artisans/level-guides-view.sass",
+		"/Users/joshcallebaut/Desktop/codecombat/app/templates/artisans/level-guides-view.jade",
+		"/Users/joshcallebaut/82916levelstats.js",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/artisans/SolutionProblemsView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/artisans/LevelGuidesView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/artisans/ThangTasksView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/templates/artisans/artisans-view.jade",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/artisans/LevelTasksView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/core/Router.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/codecombat.sublime-project",
+		"/Users/joshcallebaut/Desktop/codecombat/app/templates/play/campaign-view.jade",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/artisans/CampaignProgressView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/play/CampaignView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/styles/artisans/thang-tasks-view.sass",
+		"/Users/joshcallebaut/Desktop/codecombat/app/models/Level.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/server/middleware/achievements.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/server/middleware/classrooms.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/server/middleware/campaigns.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/collections/Levels.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/server/middleware/levels.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/server/models/Level.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/models/User.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/server/models/User.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/sublime-project.json",
+		"/Users/joshcallebaut/Desktop/codecombat/app/styles/admin/codeplayback-view.sass",
+		"/Users/joshcallebaut/Desktop/codecombat/app/templates/admin/codeplayback-view.jade",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/play/level/PlayLevelView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/vendor/scripts/spade.js",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/admin/CodePlaybackView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/server/commons/database.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/play/level/tome/SpellView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/schemas/models/achievement.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/models/Achievement.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/styles/play/campaign-view.sass",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/admin/CodeLogsView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/server/models/CodeLog.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/server/middleware/codelogs.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/collections/CodeLogs.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/schemas/models/classroom.schema.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/admin/MainAdminView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/account/PrepaidView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/collections/CocoCollection.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/play/level/tome/TomeView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/server_setup.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/core/CocoView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/schemas/subscriptions/tome.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/templates/play/level/tome/tome.jade",
+		"/Users/joshcallebaut/Desktop/codecombat/app/templates/play/play-level-view.jade",
+		"/Users/joshcallebaut/Desktop/codecombat/app/styles/play/level/tome/tome.sass",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/account/AccountSettingsRootView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/admin/AnalyticsView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/admin/SpadeView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/templates/artisans/solution-problems-view.jade",
+		"/Users/joshcallebaut/Desktop/codecombat/app/templates/admin/analytics.jade",
+		"/Users/joshcallebaut/Desktop/codecombat/app/core/d3_utils.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/server/handlers/analytics_perday_handler.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/play/modal/LeaderboardTabView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/server/routes/db.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/models/CocoModel.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/collections/LevelSessions.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/styles/admin/analytics.sass",
+		"/Users/joshcallebaut/Desktop/codecombat/app/styles/artisans/campaign-progress-view.sass",
+		"/Users/joshcallebaut/Desktop/codecombat/app/templates/artisans/campaign-progress-view.jade",
+		"/Users/joshcallebaut/Desktop/codecombat/app/collections/Users.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/courses/StudentCoursesView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/courses/TeacherClassView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/editor/campaign/CampaignLevelView.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/assets/web-dev-iframe.html",
+		"/Users/joshcallebaut/test.html",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/artisans/LevelConceptMap.coffee",
+		"/Users/joshcallebaut/Desktop/codecombat/app/templates/artisans/concept-map-view.jade",
+		"/Users/joshcallebaut/Desktop/codecombat/app/styles/artisans/concept-map-view.sass",
+		"/Users/joshcallebaut/Desktop/codecombat/app/templates/play/level/tome/spell_list_tab_entry.jade",
+		"/Users/joshcallebaut/Desktop/codecombat/app/views/play/level/tome/Spell.coffee"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"0.5, 0.5",
+			"<span>",
+			"emoteTag",
+			");",
+			"onkeydown",
+			"init",
+			"rojo",
+			"terra",
+			".name = ",
+			".name",
+			"faceRender",
+			"hudrende",
+			"key",
+			"key2",
+			"loadAssets",
+			"5",
+			"console.log",
+			"navBallQ",
+			"systemScene.add",
+			"premultiply",
+			"scene.add",
+			"innerWidth",
+			"window.innerHeight -128",
+			"window.innerWidth -128",
+			"window.innerHeight * 0.8",
+			"window.innerWidth * 0.8",
+			"init",
+			"mousemove",
+			"offsetX",
+			"domElement",
+			"window.innerWidth",
+			"window.innerHeight",
+			"window.innerWidth",
+			"piggen.mesh",
+			"ghostObject",
+			"Piggen",
+			"ambient",
+			"10",
+			"terra",
+			"sun",
+			"piggen",
+			"ws.send",
+			"ws.",
+			"this",
+			"velocity",
+			"this",
+			"tTime",
+			"tTime = ",
+			"ws.send",
+			"ws",
+			"console.log",
+			"init",
+			"console.log",
+			"navBallQ.multipl",
+			"navBallQ",
+			"dTime / 1000",
+			"camera2",
+			"dir",
+			"celestial",
+			"piggen.",
+			"pigg.",
+			"%",
+			"cameraObj",
+			"cameraobj",
+			"1",
+			"100",
+			"dTime",
+			"geo =",
+			"line =",
+			"var geo",
+			"console.log",
+			"loader",
+			"setSize",
+			"systemScene",
+			"scene",
+			"plane",
+			"camera",
+			"speedModifier",
+			"time",
+			"timeScale",
+			"speedMod",
+			"plane",
+			"obj",
+			"groundPos = {",
+			"console.log",
+			"camera3",
+			"elem",
+			"Elem",
+			"elem",
+			"console.log",
+			"pos",
+			"/ 16",
+			"/ 8",
+			"/16",
+			"yaw",
+			"console.log",
+			"camera",
+			"plane",
+			"oPitch",
+			"oYaw",
+			"obj",
+			"objLoader",
+			"obj",
+			"three",
+			"color",
+			"textureCoordAttribute",
+			"vertexColorAttribute",
+			"TextureCoordi",
+			"textureCoordniates",
+			"textureCoordAttribute",
+			"texture0",
+			"uSampler",
+			"cubeTexture",
+			"vTextureCoord",
+			"initShaders",
+			"vertexPositionAttribute",
+			"vertexColorAttribute",
+			"squareVerticesBuffer",
+			"cubeVerticesIndexBuffer",
+			"cubeVerticesColorBuffer",
+			"cubeVertices",
+			"drawScene",
+			"muter",
+			"method:",
+			"console.log",
+			"specialties",
+			"index.js",
+			"index.html"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6079,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2573,
+								2573
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/HTML/HTML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1757.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "rockat.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 20559,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								12367,
+								12367
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 5719.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "PhysicsObject.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5855,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3620,
+								3620
+							]
+						],
+						"settings":
+						{
+							"auto_name": "module.exports = class ? {",
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1155.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "CelestialBody.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1058,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								252,
+								252
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "server.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5016,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								281,
+								281
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "assets.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1421,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								802,
+								802
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "GhostObject.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2933,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								718,
+								718
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 29.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "rockat.sublime-project",
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"bundle",
+				"bundle.js"
+			],
+			[
+				"cele",
+				"CelestialBody.js"
+			],
+			[
+				"asset",
+				"assets.js"
+			],
+			[
+				"server.js",
+				"server.js"
+			],
+			[
+				"rockat2",
+				"rockat2.js"
+			],
+			[
+				"rocka",
+				"rockat2.js"
+			],
+			[
+				"inde",
+				"index.html"
+			],
+			[
+				"shell",
+				"sdether-josh.js-1a4ef27/js/shell.js"
+			],
+			[
+				"pack",
+				"package.json"
+			],
+			[
+				"read",
+				"README.md"
+			],
+			[
+				"kar",
+				"karma.conf.js"
+			],
+			[
+				"wdio.co",
+				"wdio.conf.js"
+			],
+			[
+				"spad.ejs",
+				"tests/integration/Spade.js"
+			],
+			[
+				"karma",
+				"karma.conf.js"
+			],
+			[
+				"step",
+				"steps_file.js"
+			],
+			[
+				"webpack",
+				"webpack.config.js"
+			],
+			[
+				"kara",
+				"karma.conf.js"
+			],
+			[
+				"spade",
+				"spade.js"
+			],
+			[
+				"codeplayback",
+				"app/templates/admin/codeplayback-view.jade"
+			],
+			[
+				"playback",
+				"app/styles/admin/codeplayback-view.sass"
+			],
+			[
+				"codelogs",
+				"app/templates/admin/codelogs-view.jade"
+			],
+			[
+				"campaignview",
+				"app/views/play/CampaignView.coffee"
+			],
+			[
+				"solution",
+				"app/views/artisans/SolutionProblemsView.coffee"
+			],
+			[
+				"router",
+				"app/core/Router.coffee"
+			],
+			[
+				"artisans",
+				"app/templates/artisans/artisans-view.jade"
+			],
+			[
+				"leveltasksv",
+				"app/views/artisans/LevelTasksView.coffee"
+			],
+			[
+				"thang-task",
+				"app/styles/artisans/thang-tasks-view.sass"
+			],
+			[
+				"campaigns",
+				"server/middleware/campaigns.coffee"
+			],
+			[
+				"thangtasksview",
+				"app/views/artisans/ThangTasksView.coffee"
+			],
+			[
+				"level",
+				"app/collections/Levels.coffee"
+			],
+			[
+				"classrooms",
+				"server/middleware/classrooms.coffee"
+			],
+			[
+				"campaigns.coffe",
+				"server/middleware/campaigns.coffee"
+			],
+			[
+				"achievements.coffe",
+				"server/middleware/achievements.coffee"
+			],
+			[
+				"level.coffee",
+				"server/models/Level.coffee"
+			],
+			[
+				"levels",
+				"server/middleware/levels.coffee"
+			],
+			[
+				"models/level",
+				"app/models/Level.coffee"
+			],
+			[
+				"level-tasks",
+				"app/templates/artisans/level-tasks-view.jade"
+			],
+			[
+				"leveltasks",
+				"app/views/artisans/LevelTasksView.coffee"
+			],
+			[
+				"ruter",
+				"app/core/Router.coffee"
+			],
+			[
+				"user",
+				"app/models/User.coffee"
+			],
+			[
+				"campaign-view",
+				"app/templates/play/campaign-view.jade"
+			],
+			[
+				"user.cof",
+				"app/models/User.coffee"
+			],
+			[
+				"campaignprogre",
+				"app/views/artisans/CampaignProgressView.coffee"
+			],
+			[
+				"class",
+				"app/schemas/models/classroom.schema.coffee"
+			],
+			[
+				"achievement",
+				"app/schemas/models/achievement.coffee"
+			],
+			[
+				"achievmeen",
+				"app/models/Achievement.coffee"
+			],
+			[
+				"campaign-view.jade",
+				"app/templates/play/campaign-view.jade"
+			],
+			[
+				"middlewareachievements",
+				"server/middleware/achievements.coffee"
+			],
+			[
+				"codelog.coffee",
+				"server/models/CodeLog.coffee"
+			],
+			[
+				"playlevelview",
+				"app/views/play/level/PlayLevelView.coffee"
+			],
+			[
+				"codeplay",
+				"app/views/admin/CodePlaybackView.coffee"
+			],
+			[
+				"leveltasks-view",
+				"app/templates/artisans/level-tasks-view.jade"
+			],
+			[
+				"codelogs.jade",
+				"app/templates/admin/codelogs-view.jade"
+			],
+			[
+				"cococ",
+				"app/collections/CocoCollection.coffee"
+			],
+			[
+				"codelogs.coffe",
+				"app/collections/CodeLogs.coffee"
+			],
+			[
+				"leveltaskvie",
+				"app/views/artisans/LevelTasksView.coffee"
+			],
+			[
+				"tomeview.coff",
+				"app/views/play/level/tome/TomeView.coffee"
+			],
+			[
+				"playview",
+				"app/views/play/level/PlayLevelView.coffee"
+			],
+			[
+				"cocoview",
+				"app/views/core/CocoView.coffee"
+			],
+			[
+				"tomeview.coffe",
+				"app/views/play/level/tome/TomeView.coffee"
+			],
+			[
+				"tome",
+				"app/schemas/subscriptions/tome.coffee"
+			],
+			[
+				"tome.sass",
+				"app/styles/play/level/tome/tome.sass"
+			],
+			[
+				"analyticsview",
+				"app/views/admin/AnalyticsView.coffee"
+			],
+			[
+				"spadeview",
+				"app/views/admin/SpadeView.coffee"
+			],
+			[
+				"codelogs-view",
+				"app/templates/admin/codelogs-view.jade"
+			],
+			[
+				"playlevel",
+				"app/templates/play/play-level-view.jade"
+			],
+			[
+				"tomeview",
+				"app/views/play/level/tome/TomeView.coffee"
+			],
+			[
+				"tome.jade",
+				"app/templates/play/level/tome/tome.jade"
+			],
+			[
+				"spellview",
+				"app/views/play/level/tome/SpellView.coffee"
+			],
+			[
+				"admin/codelogs",
+				"app/views/admin/CodeLogsView.coffee"
+			],
+			[
+				"cocomodel",
+				"app/models/CocoModel.coffee"
+			],
+			[
+				"cococollec",
+				"app/collections/CocoCollection.coffee"
+			],
+			[
+				"cococollect",
+				"app/collections/CocoCollection.coffee"
+			],
+			[
+				"db",
+				"server/routes/db.coffee"
+			],
+			[
+				"levelsessions",
+				"app/collections/LevelSessions.coffee"
+			],
+			[
+				"analytics",
+				"server/handlers/analytics_perday_handler.coffee"
+			],
+			[
+				"leaderboardtab",
+				"app/views/play/modal/LeaderboardTabView.coffee"
+			],
+			[
+				"d3_utils",
+				"app/core/d3_utils.coffee"
+			],
+			[
+				"campaign-progres",
+				"app/styles/artisans/campaign-progress-view.sass"
+			],
+			[
+				"analytics.sas",
+				"app/styles/admin/analytics.sass"
+			],
+			[
+				"d3utils",
+				"app/core/d3_utils.coffee"
+			],
+			[
+				"analyt",
+				"app/styles/admin/analytics.sass"
+			],
+			[
+				"analytics_perday",
+				"server/handlers/analytics_perday_handler.coffee"
+			],
+			[
+				"solution-problem",
+				"app/templates/artisans/solution-problems-view.jade"
+			],
+			[
+				"campaignlevelview",
+				"app/views/editor/campaign/CampaignLevelView.coffee"
+			],
+			[
+				"campaignview.jade",
+				"app/templates/play/campaign-view.jade"
+			],
+			[
+				"solution-p",
+				"app/templates/artisans/solution-problems-view.jade"
+			],
+			[
+				"solutionproblems",
+				"app/views/artisans/SolutionProblemsView.coffee"
+			],
+			[
+				"web-de",
+				"app/assets/web-dev-iframe.html"
+			],
+			[
+				"concept",
+				"app/templates/artisans/concept-map-view.jade"
+			],
+			[
+				"levelconcept",
+				"app/views/artisans/LevelConceptMap.coffee"
+			],
+			[
+				"component",
+				"app/views/editor/docs/ComponentsDocumentationView.coffee"
+			],
+			[
+				"router.",
+				"app/core/Router.coffee"
+			],
+			[
+				"spelllisttab",
+				"app/templates/play/level/tome/spell_list_tab_entry.jade"
+			],
+			[
+				"camapgigned",
+				"app/styles/editor/campaign/campaign-editor-view.sass"
+			],
+			[
+				"campaignedit",
+				"app/templates/editor/campaign/campaign-editor-view.jade"
+			],
+			[
+				"campaigneditr",
+				"app/views/editor/campaign/CampaignEditorView.coffee"
+			],
+			[
+				"thangtasks",
+				"app/views/artisans/ThangTasksView.coffee"
+			],
+			[
+				"hintsview",
+				"app/views/play/level/HintsView.coffee"
+			],
+			[
+				"hintsta",
+				"app/views/play/level/HintsState.coffee"
+			],
+			[
+				"spell.coffee",
+				"app/views/play/level/tome/Spell.coffee"
+			],
+			[
+				"spelllisttaben",
+				"app/views/play/level/tome/SpellListTabEntryView.coffee"
+			],
+			[
+				"tabentry",
+				"app/templates/play/level/tome/spell_list_tab_entry.jade"
+			],
+			[
+				"spell_list",
+				"app/templates/play/level/tome/spell_list_tab_entry.jade"
+			],
+			[
+				"play-level",
+				"app/templates/play/play-level-view.jade"
+			],
+			[
+				"rand",
+				"app/lib/world/rand.coffee"
+			],
+			[
+				"thang.coffee",
+				"app/lib/world/thang.coffee"
+			],
+			[
+				"newhomeview",
+				"app/templates/new-home-view.jade"
+			],
+			[
+				"newhomev",
+				"app/views/NewHomeView.coffee"
+			],
+			[
+				"base.jade",
+				"app/templates/base.jade"
+			],
+			[
+				"solut",
+				"app/templates/artisans/solution-problems-view.jade"
+			],
+			[
+				"solutionproblem",
+				"app/styles/artisans/solution-problems-view.sass"
+			],
+			[
+				"solutionprob",
+				"app/views/artisans/SolutionProblemsView.coffee"
+			],
+			[
+				"complete.sass",
+				"app/styles/editor/level/component/level-component-edit-view.sass"
+			],
+			[
+				"spellpaletteen",
+				"app/views/play/level/tome/SpellPaletteEntryView.coffee"
+			],
+			[
+				"spellpaletteview",
+				"app/views/play/level/tome/SpellPaletteView.coffee"
+			],
+			[
+				"spell.sass",
+				"app/styles/play/level/tome/spell.sass"
+			],
+			[
+				"codeproblem",
+				"server/models/UserCodeProblem.coffee"
+			],
+			[
+				"solutions-vie",
+				"app/templates/artisans/solution-problems-view.jade"
+			],
+			[
+				"thang-tasks",
+				"app/templates/artisans/thang-tasks-view.jade"
+			],
+			[
+				"level-tasks-",
+				"app/templates/artisans/level-tasks-view.jade"
+			],
+			[
+				"layer",
+				"app/lib/surface/LayerAdapter.coffee"
+			],
+			[
+				"artisans-view",
+				"app/templates/artisans/artisans-view.jade"
+			],
+			[
+				"thangtaskview",
+				"app/views/artisans/ThangTasksView.coffee"
+			],
+			[
+				"leveltaskview",
+				"app/views/artisans/LevelTasksView.coffee"
+			],
+			[
+				"soluti",
+				"app/views/artisans/SolutionProblemsView.coffee"
+			],
+			[
+				"solution-probl",
+				"app/templates/artisans/solution-problems-view.jade"
+			],
+			[
+				"solution-prol",
+				"app/styles/artisans/solution-problems-view.sass"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 170.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

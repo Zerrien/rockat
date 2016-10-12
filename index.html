@@ -1,5 +1,6 @@
 <html>
 	<head>
+
 		<style>
 			* {
 				margin: 0;
@@ -21,8 +22,8 @@
 			}
 			.nameTag {
 				position: absolute;
-				color:white;
-				background-color: rgba(0, 0, 255, 0.75);
+				color:black;
+				background-color: rgba(255, 255, 255, 0.75);
 				border: 1px solid white;
 				border-radius: 4px;
 				padding: 4px;
@@ -32,10 +33,10 @@
 			#renderContainer {
 				border-radius: 32px;
 				position:absolute;
-				width: calc(100% - 300px);
 				height: 80%;
 				left: 0px;
 				top: 10%;
+				width:100%;
 			}
 			#header {
 				text-align:center;
@@ -65,8 +66,25 @@
 			}
 			#footer {
 				position:absolute;
-				width: calc(100% - 300px);
+				width: 100%;
 				top:90%;
+				height: 10%;
+				text-align:center;
+				display:flex;
+				align-items: center;
+				justify-content: center;
+			}
+			#donateButtonContainer {
+				position:absolute;
+				width: 300px;
+				top: 90%;
+				left: calc(100% - 300px);
+				height: 10%;
+				display:flex;
+				align-items: center;
+				justify-content: center;
+				color:white;
+				font-family:sans-serif;
 			}
 			#adTest {
 				width: 300px;
@@ -80,6 +98,9 @@
 				background-color:rgba(0, 0, 0, 0.75);
 				z-index: 99999;
 			}
+			.stubby {
+				width: calc(100% - 300px) !important;
+			}
 			#formForm {
 				position:absolute;
 				width: 50%;
@@ -89,10 +110,51 @@
 				text-align:center;
 				color:white;
 			}
+			.planetIcon {
+				border-radius:999px;
+			}
+			.planetContainer {
+				width: 10%;
+				height:100%;
+				display:flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.isDonator {
+				background-color: rgba(255, 127, 0, 0.75);
+				color: white;
+			}
+			#tooltip {
+				position:absolute;
+
+			}
+			#controls {
+				position: absolute;
+				left:0%;
+				top:0%;
+				color:white;
+				font-family:sans-serif;
+				text-align:left;
+			}
+			.emote {
+				text-align:center;
+			}
+			#log {
+				position: absolute;
+				top: 0%;
+				left: 32px;
+				font-family: sans-serif;
+				color: white;
+			}
+			.subchat {
+				color: orange;
+			}
 		</style>
 		<script src="./three.min.js"></script>
 		<script src="./OBJLoader.js"></script>
 		<script src="./jquery-3.1.1.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 		<script src="./bundle.js"></script>
 	</head>
 	<body>
@@ -111,37 +173,97 @@
 							$("#submitName").attr('disabled', 'disabled');
 						}
 					})
+					if(document.URL.match(/donater=(1+)/)) {
+						$("#formForm").append("<div>Thanks for your donation!</div>");
+					} else {
+
+					}
 				</script>
 			</div>
 		</div>
 		<div id="header">
+			<div id="controls">
+				WASDQE to Rotate
+				<br>
+				Space to Accelerate
+				<br>
+				0-9 to Emote
+			</div>
 			<img src="roskatmos.png">
 		</div>
 		<div id="rightBanner">
-		<!--
 			<div id="adTest">
-			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-			<ins class="adsbygoogle"
-			     style="display:inline-block;width:300px;height:600px"
-			     data-ad-client="ca-pub-9874031524072589"
-			     data-ad-slot="1505083520"></ins>
-			<script>
-			(adsbygoogle = window.adsbygoogle || []).push({});
-			</script>
+				<script>
+					if(document.URL.match(/donater=(1+)/)) {
+						$("#rightBanner").hide();
+					} else {
+						var script = document.createElement('script');
+						script.src = "//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+						$("#adTest")[0].appendChild(script);
+					}
+				</script>
+				<ins class="adsbygoogle"
+				     style="display:inline-block;width:300px;height:600px"
+				     data-ad-client="ca-pub-9874031524072589"
+				     data-ad-slot="1505083520"></ins>
+				<script>
+				(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
 			</div>
-		-->
+		
 		</div>
-		<div id="renderContainer">
+		<div class="stubby" id="renderContainer">
 			<div id="altitude"></div>
+			<div id="log">
+			</div>
 		</div>
-		<div id="footer">
-			🍆
+		<!--
+		🍆
+			
+		-->
+		<div class="stubby" id="footer">
+			<div class="planetContainer" title="Sol, the star that which we revolve.">
+				<img class="planetIcon" height="100%" src="sol.png">
+			</div>
+			<div class="planetContainer" title="Fe, a tiny purple planet forever singed by Sol.">
+				<img class="planetIcon" height="12.5%" src="fe.png">
+			</div>
+			<div class="planetContainer" title="Rojo, its brilliant red hue inspires even the most lackadasical comrade.">
+				<img class="planetIcon" height="37.5%" src="rojo.png">
+			</div>
+			<div class="planetContainer" title="Terra, home.">
+				<img class="planetIcon" height="25%" src="world.png">
+			</div>
+			<div class="planetContainer" title="Luna, the milk saucer in the sky that has remained out of our reach, until today.">
+				<img class="planetIcon" height="6%" src="luna.png">
+			</div>
+			<div class="planetContainer" title="Wasser, contrary to popular belief, it's just solid rock.">
+				<img class="planetIcon" height="50%" src="wasser.png">
+			</div>
+			<div class="planetContainer" title="Igloo, recently voted: least likely to be an actual planet.">
+				<img class="planetIcon" height="3%" src="igloo.png">
+			</div>
+		</div>
+		<div id="donateButtonContainer">
+			Having fun? Don't want ads? 
+			<br>
+			Want to wear an ushanka?
+			<br>
+			Consider a donation!
+			<br>
 			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 				<input type="hidden" name="cmd" value="_s-xclick">
-				<input type="hidden" name="hosted_button_id" value="6WEE8KCZR8WSG">
+				<input type="hidden" name="hosted_button_id" value="KX36PM2M43QCY">
 				<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
 				<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 			</form>
 		</div>
+		<script>
+			if(document.URL.match(/donater=(1+)/)) {
+				$("#donateButtonContainer").hide();
+				$("#renderContainer").removeClass("stubby");
+				$("#footer").removeClass("stubby");
+			}
+		</script>
 	</body>
 </html>

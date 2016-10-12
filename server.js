@@ -3,12 +3,20 @@ var wss = new WebSocketServer({port: 3000});
 
 var connections = [];
 var sTime = (new Date()).getTime();
+function hasValidXYZ(obj) {
+	if(typeof obj.x === "number" && typeof obj.y === "number" && typeof obj.z === "number") {
+		return true;
+	}
+	return false;
+}
 wss.on('connection', function connection(ws) {
 	console.log("Incoming connection...");
 	connections.push(ws);
 	ws.uuid = (new Date()).getTime() + "" + Math.round(Math.random() * 999999);
 	ws.key = Math.round(Math.random() * 9999999999);
 	ws.piggen = null;
+	ws.canEmote = true;
+	ws.nextEmote = -1;
 	ws.send(JSON.stringify({
 		messageType: "connection_confirmed",
 		data: {
@@ -23,8 +31,37 @@ wss.on('connection', function connection(ws) {
 			switch(message.messageType) {
 				case "piggen_update":
 					if(message.data.key === ws.key) {
-						ws.piggen = message.data.piggen;
-						ws.name = message.data.name;
+						if(typeof message.data.name === "string" && typeof message.data.isDonator === "boolean") {
+							if(typeof message.data.piggen.pos === "object" && typeof message.data.piggen.vel === "object" && typeof message.data.piggen.acc === "object" && typeof message.data.piggen.anchorLoc === "object") {
+								if(typeof message.data.piggen.pitch === "number" && typeof message.data.piggen.yaw === "number" && typeof message.data.piggen.roll === "number" && typeof message.data.piggen.isGrounded === "boolean") {
+									if(hasValidXYZ(message.data.piggen.pos) && hasValidXYZ(message.data.piggen.vel) && hasValidXYZ(message.data.piggen.acc) && hasValidXYZ(message.data.piggen.anchorLoc)) {
+										ws.piggen = message.data.piggen;
+										ws.name = message.data.name.substring(0, 12);
+										ws.isDonator = message.data.isDonator;
+									} else {
+										throw new Error("pos, vel, acc, or anchor loc doesn't have valid xyz");
+									}
+								} else {
+									throw new Error("pitch, yaw, roll, or isGrounded type mismatch");
+								}
+							} else {
+								throw new Error("pos, vel, acc, or anchorLoc not objects.");
+							}
+						} else {
+							throw new Error("name or isDonator type-mismatch");
+						}
+					} else {
+						console.log("Key mismatch... Naughty, naughty?");
+					}
+					break;
+				case "emote":
+					if(message.data.key === ws.key) {
+						ws.canEmote = false;
+						setTimeout(function() {
+							ws.canEmote = true;
+
+						}, 3000);
+						ws.nextEmote = message.data.num;
 					} else {
 						console.log("Key mismatch... Naughty, naughty?");
 					}
@@ -34,6 +71,7 @@ wss.on('connection', function connection(ws) {
 					break;
 			}
 		} catch(e) {
+			console.log(e);
 			console.log("Bad data...");
 			ws.close();
 		}
@@ -47,10 +85,15 @@ wss.on('connection', function connection(ws) {
 						messageType: "world_update",
 						data: {
 							uuid: con.uuid,
-							name: con.name,
-							piggen: con.piggen
+							name: con.name.substring(0, 12),
+							piggen: con.piggen,
+							isDonator: con.isDonator,
+							emote: con.nextEmote
 						}
 					}));
+					if(con.nextEmote !== -1) {
+						con.nextEmote = -1;
+					}
 				} catch(e) {
 					ws.close();
 				}

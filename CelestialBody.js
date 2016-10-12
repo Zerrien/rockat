@@ -1,5 +1,5 @@
 module.exports = class CelestialBody {
-	constructor(size, map, target, orbit, speed, mass) {
+	constructor(size, map, target, orbit, speed, mass, name) {
 		this.size = size;
 		this.map = map;
 		this.geometry = new THREE.SphereGeometry(this.size, 128, 128);
@@ -9,6 +9,7 @@ module.exports = class CelestialBody {
 		this.orbit = orbit;
 		this.speed = speed;
 		this.mass = mass;
+		this.name = name;
 
 		var parentPos = this.orbit;
 		var parent = this.target;

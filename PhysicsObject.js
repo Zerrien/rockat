@@ -1,4 +1,13 @@
 var CelestialBody = require('./CelestialBody.js');
+var phrases = {
+	"Sol":"been vaporized on the surface of",
+	"Fe":"touched down on",
+	"Rojo":"kicked up dust on",
+	"Terra":"returned to",
+	"Luna":"landed on",
+	"Wasser":"splashed down on",
+	"Igloo":"discovered"
+}
 module.exports = class PhysicsObject {
 	constructor(mesh, target, mass) {
 		this.mesh = mesh;
@@ -19,6 +28,9 @@ module.exports = class PhysicsObject {
 		this.yaw = 0;
 		this.roll = 0;
 		this.dist = 0;
+		this.canMakeSound = true;
+		this.nearestCeles = null;
+		this.lastName = "";
 	}
 	logic(dTime, tTime, entities) {
 		this.mesh.rotation.y = this.pitch;
@@ -29,6 +41,7 @@ module.exports = class PhysicsObject {
 		var pDir = new THREE.Vector3(1, 0, 0);
 		pDir.applyMatrix4(navBallQ);
 		var celestial = this.findNearestCelestial(entities);
+		this.nearestCeles = celestial;
 		var dir = celestial.pos.sub(this.pos);
 		var gForce2 = 0.01 * (celestial.mass * this.mass) / (celestial.pos.distanceToSquared(this.pos));
 		while(dTime > 0) {
@@ -46,6 +59,7 @@ module.exports = class PhysicsObject {
 				this.mesh.position.z += tStep * (this.vel.z + tStep * this.acc.z / 2);
 
 				celestial = this.findNearestCelestial(entities);
+				this.nearestCeles = celestial;
 
 				gForce2 = 0.01 * (celestial.mass * this.mass) / (celestial.pos.distanceToSquared(this.pos));
 				this.dist = Math.sqrt(celestial.pos.distanceToSquared(this.pos)) - celestial.size;
@@ -91,6 +105,26 @@ module.exports = class PhysicsObject {
 					this.anchorLoc.y = dir.y;
 					this.anchorLoc.z = dir.z;
 					this.isGrounded = true;
+					if(this.canMakeSound) {
+						sounds[(soundIndex++) % 10].play();
+						this.canMakeSound = false;
+						setTimeout(function() {
+							this.canMakeSound = true;
+						}.bind(this), 250);
+
+						if(this.nearestCeles.name !== "Terra" && this.nearestCeles.name !== this.lastName) {
+							this.lastName = this.nearestCeles.name;
+							var chatlog = $("<div>").addClass("chat");
+							if(document.URL.match(/donater=(1+)/)) {
+								chatlog.addClass("subchat");
+							}
+							chatlog.text($("#nameField").val().substring(0, 12) + (document.URL.match(/donater=(1+)/) ? " 💵" : "") + " has "+phrases[this.nearestCeles.name]+" " + this.nearestCeles.name + ".");
+							$("#log").append(chatlog)
+							setTimeout(function() {
+								$("#log :first-child").remove();
+							}, 3000);
+						}
+					}
 					this.target = celestial;
 					this.velocity.set(0, 0, 0);
 				}

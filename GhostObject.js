@@ -1,8 +1,21 @@
 var CelestialBody = require('./CelestialBody.js');
+var phrases = {
+	"Sol":"been vaporized on the surface of",
+	"Fe":"touched down on",
+	"Rojo":"kicked up dust on",
+	"Terra":"returned to",
+	"Luna":"landed on",
+	"Wasser":"splashed down on",
+	"Igloo":"discovered"
+}
 module.exports = class GhostObject {
 	constructor(mesh, piggen) {
 		this.mesh = mesh;
 		this.update(piggen);
+		this.canMakeSound = true;
+		this.nearestCeles = null
+		this.isDonate = false;
+		this.lastName = "";
 	}
 	update(what) {
 		this.mesh.position.x = what.pos.x;
@@ -11,19 +24,37 @@ module.exports = class GhostObject {
 		this.mesh.rotation.y = what.pitch;
 		this.mesh.rotation.x = what.roll;
 		this.mesh.rotation.z = what.yaw;
+		if(this.canMakeSound) {
+			if(this.piggen) {
+				if(what.isGrounded && what.isGrounded !== this.piggen.isGrounded) {
+					sounds[(soundIndex++) % 10].play();
+					this.canMakeSound = false;
+					setTimeout(function() {
+						this.canMakeSound = true;
+					}.bind(this), 250);
+
+					if(this.nearestCeles.name !== "Terra" && this.nearestCeles.name !== this.lastName) {
+						this.lastName = this.nearestCeles.name;
+						var chatlog = $("<div>").addClass("chat");
+						if(this.isDonate) {
+							chatlog.addClass("subchat");
+						}
+						chatlog.text(this.charName + " has "+phrases[this.nearestCeles.name]+" " + this.nearestCeles.name + ".");
+						$("#log").append(chatlog)
+						setTimeout(function() {
+							$("#log :first-child").remove();
+						}, 3000);
+					}
+				}
+			}
+		}
 		this.piggen = what;
 	}
 	logic(dTime, tTime, entities) {
-		/*
-		this.mesh.position.x += tStep * (this.vel.x + tStep * this.acc.x / 2);
-		this.mesh.position.y += tStep * (this.vel.y + tStep * this.acc.y / 2);
-		this.mesh.position.z += tStep * (this.vel.z + tStep * this.acc.z / 2);
-		*/
-		/*
-		*/
 		var tSize = dTime;
 		var tStep = tSize / 100;
 		var celestial = this.findNearestCelestial(entities);
+		this.nearestCeles = celestial;
 		if(!this.piggen.isGrounded) {
 			this.mesh.position.x += tStep * (this.piggen.vel.x + tStep * this.piggen.acc.x / 2);
 			this.mesh.position.y += tStep * (this.piggen.vel.y + tStep * this.piggen.acc.y / 2);
@@ -53,7 +84,7 @@ module.exports = class GhostObject {
 
 			$("#"+this.uuid).show();
 		}
-		$("#"+this.uuid).css('left', Math.round((pos.x + 1) * (window.innerWidth - 300) / 2))
+		$("#"+this.uuid).css('left', Math.round((pos.x + 1) * ($("#renderContainer").innerWidth()) / 2))
 		$("#"+this.uuid).css('top', Math.round((-1 * pos.y + 1) * (window.innerHeight * 0.8) / 2) - 64)
 
 	}
