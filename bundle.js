@@ -369,7 +369,7 @@
 		setupEventListeners();
 		setupScenes();
 		setupSystem();
-		ws = new WebSocket('ws://roskatmos.com:3000');
+		ws = new WebSocket('ws://localhost:3000');
 		var isDonator;
 		if(document.URL.match(/donater=(1+)/)) {
 			isDonator = true;
@@ -1180,7 +1180,6 @@
 
 	module.exports = {
 		textures: {
-			piggen: "piggen_colored.png",
 			terra: "world.png",
 			luna: "luna.png",
 			sol: "sol.png",
@@ -1207,10 +1206,6 @@
 			igloo: "igloo.png"
 		},
 		models: {
-			piggen: {
-				src: "piggen.obj",
-				texture: "piggen"
-			},
 			kat: {
 				src: "kat.obj",
 				texture: "kat"
